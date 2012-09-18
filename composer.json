@@ -1,0 +1,24 @@
+{
+    "name": "webignition/website-rss-feed-finder",
+    "description": "Find the RSS feed from a given website base URL",
+    "keywords": ["RSS"],
+    "homepage": "https://github.com/webignition/website-rss-feed-finder",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jon Cram",
+            "email": "jon@webignition.net"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },    
+    "require": {
+        "php": ">=5.3.0",
+        "webignition/http-client":"dev-master",
+        "webignition/internet-media-type":">=0.1,<2.0",
+        "webignition/web-page-model":">=0.1,<2.0"
+    },
+    "minimum-stability":"dev"
+}

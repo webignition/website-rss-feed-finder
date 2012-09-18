@@ -1,0 +1,391 @@
+{
+    "hash": "4cdec4fecfed1bea244e4e28eb5530f1",
+    "packages": [
+        {
+            "name": "querypath/QueryPath",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/technosophos/querypath.git",
+                "reference": "0341dc09427928115022b3553b7117ddcbc0ec08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/technosophos/querypath/zipball/0341dc09427928115022b3553b7117ddcbc0ec08",
+                "reference": "0341dc09427928115022b3553b7117ddcbc0ec08",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "1347937314",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "QueryPath": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "HTML/XML querying (CSS 4 or XPath) and processing (like jQuery)",
+            "homepage": "https://github.com/technosophos/querypath",
+            "keywords": [
+                "xml",
+                "jquery",
+                "css",
+                "html",
+                "xslt"
+            ]
+        },
+        {
+            "name": "webignition/absolute-url-deriver",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/absolute-url-deriver",
+                "reference": "d84d6f74fe55429d4e19f7ede4d81fd3090738cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/webignition/absolute-url-deriver/zipball/d84d6f74fe55429d4e19f7ede4d81fd3090738cc",
+                "reference": "d84d6f74fe55429d4e19f7ede4d81fd3090738cc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "webignition/url": ">=1.1"
+            },
+            "time": "1343344065",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "Derives an absolute URL from relative and source URLs",
+            "homepage": "https://github.com/webignition/absolute-url-deriver",
+            "keywords": [
+                "url",
+                "absolute"
+            ]
+        },
+        {
+            "name": "webignition/http-client",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/http-client",
+                "reference": "17d70c76703029ea0b318c727e930b3c772a32a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/webignition/http-client/zipball/17d70c76703029ea0b318c727e930b3c772a32a5",
+                "reference": "17d70c76703029ea0b318c727e930b3c772a32a5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "ext-http": "*",
+                "webignition/absolute-url-deriver": ">=1.1",
+                "webignition/url": ">1.0"
+            },
+            "time": "1344029348",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "HTTP Client with additional reliability over regular HTTP request sending to compensate for timeouts and redirects",
+            "homepage": "https://github.com/webignition/http-client",
+            "keywords": [
+                "http",
+                "client"
+            ]
+        },
+        {
+            "name": "webignition/internet-media-type",
+            "version": "0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/internet-media-type.git",
+                "reference": "0.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/webignition/internet-media-type/zipball/0.4",
+                "reference": "0.4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "webignition/quoted-string": ">=0.1,<2.0",
+                "webignition/string-parser": ">=0.1, <2.0"
+            },
+            "time": "2012-08-16 13:14:02",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "PHP model of an http://en.wikipedia.org/wiki/Internet_media_type",
+            "homepage": "https://github.com/webignition/internet-media-type",
+            "keywords": [
+                "internet media type",
+                "media type",
+                "media-type",
+                "content type",
+                "content-type"
+            ]
+        },
+        {
+            "name": "webignition/quoted-string",
+            "version": "0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/quoted-string.git",
+                "reference": "0.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/webignition/quoted-string/zipball/0.2",
+                "reference": "0.2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "webignition/string-parser": "0.1"
+            },
+            "time": "2012-08-15 17:44:56",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "A parser for string values that are encapsulated in double quotes (ASCII 34)",
+            "homepage": "https://github.com/webignition/quoted-string",
+            "keywords": [
+                "parser",
+                "quoted-string"
+            ]
+        },
+        {
+            "name": "webignition/string-parser",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/string-parser.git",
+                "reference": "0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/webignition/string-parser/zipball/0.1",
+                "reference": "0.1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "2012-08-15 17:36:12",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "Abstract state-based string parser",
+            "homepage": "https://github.com/webignition/string-parser",
+            "keywords": [
+                "parser",
+                "string"
+            ]
+        },
+        {
+            "name": "webignition/url",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/url",
+                "reference": "c5adb2d25bc3ced3fede8a9835dc1d2b80c793b6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/webignition/url/zipball/c5adb2d25bc3ced3fede8a9835dc1d2b80c793b6",
+                "reference": "c5adb2d25bc3ced3fede8a9835dc1d2b80c793b6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "1345673270",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "Represents a URL, a library to be used in many other places. Applies semantically-lossless normalisation for comparisons.",
+            "homepage": "https://github.com/webignition/url",
+            "keywords": [
+                "url"
+            ]
+        },
+        {
+            "name": "webignition/web-page-model",
+            "version": "0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/web-page-model.git",
+                "reference": "0.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/webignition/web-page-model/zipball/0.4",
+                "reference": "0.4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "webignition/web-resource-model": ">=0.1,<2.0",
+                "querypath/querypath": ">=3.0.0"
+            },
+            "time": "2012-09-17 14:10:59",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "Model of a web page, based off webignition/web-resource-model",
+            "homepage": "https://github.com/webignition/web-page-model",
+            "keywords": [
+                "model",
+                "webpage"
+            ]
+        },
+        {
+            "name": "webignition/web-resource-model",
+            "version": "0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/web-resource-model.git",
+                "reference": "0.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/webignition/web-resource-model/zipball/0.4",
+                "reference": "0.4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "webignition/internet-media-type": ">=0.1,<2.0"
+            },
+            "time": "2012-08-16 14:16:06",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "Model of a web-based resource",
+            "homepage": "https://github.com/webignition/web-resource-model",
+            "keywords": [
+                "web",
+                "modem"
+            ]
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "webignition/http-client": 20
+    }
+}

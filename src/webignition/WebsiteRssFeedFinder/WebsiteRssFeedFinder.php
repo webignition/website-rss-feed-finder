@@ -25,15 +25,23 @@ class WebsiteRssFeedFinder {
     
     /**
      *
-     * @var \webignition\WebsiteSitemapFinder\XmlSitemapIdentifier
+     * @var WebPage
      */
-    private $sitemapIdentifier = null;
+    private $rootWebPage = null;
     
-//    private $allowedWebPageContentTypes = array(
-//        'text/html',
-//        'application/xhtml+xml'
-//    );
-
+    
+    /**
+     * Collection of feed urls
+     * 
+     * @var array
+     */
+    private $feedUrls = array();
+    
+    
+    private $supportedFeedTypes = array(
+        'application/rss+xml',
+        'application/atom+xml'
+    );
     
     
     /**
@@ -84,96 +92,64 @@ class WebsiteRssFeedFinder {
      * @return string
      */
     public function getRssFeedUrl() {
+        return $this->getLinkHref('alternate', 'application/rss+xml');
+    }
+    
+    
+    /**
+     *
+     * @return string
+     */
+    public function getAtomFeedUrl() {
+        return $this->getLinkHref('alternate', 'application/atom+xml');
+    }
+    
+    
+    /**
+     *
+     * @param string $rel
+     * @param string $type
+     * @return string 
+     */
+    private function getLinkHref($rel, $type) {        
+        if (!isset($this->feedUrls[$rel]) || !isset($this->feedUrls[$rel][$type])) {            
+            if (!$this->findFeedUrls()) {
+                return null;
+            }
+        }
+        
+        return $this->feedUrls[$rel][$type];
+    }
+    
+    
+    private function findFeedUrls() {        
         $rootWebPage = $this->getRootWebPage();
         if ($rootWebPage == false) {
             return false;
-        }
+        }        
         
         libxml_use_internal_errors(true);
         
-        $rssFeedUrl = null;        
-        try {
-            @$rootWebPage->find('link[rel=alternate]')->each(function ($index, \DOMElement $domElement) use (&$rssFeedUrl) {
-                if ($domElement->getAttribute('type') == 'application/rss+xml') {
-                    $rssFeedUrl = $domElement->getAttribute('href');
+        $feedUrls = array();
+        $supportedFeedTypes = $this->supportedFeedTypes;
+        try {            
+            $rootWebPage->find('link[rel=alternate]')->each(function ($index, \DOMElement $domElement) use (&$feedUrls, $supportedFeedTypes) {
+                foreach ($supportedFeedTypes as $supportedFeedType) {                
+                    if ($domElement->getAttribute('type') == $supportedFeedType) {
+                        if (!isset($feedUrls['alternate'])) {
+                            $feedUrls['alternate'] = array();
+                        }
+                        
+                        $feedUrls['alternate'][$supportedFeedType] = $domElement->getAttribute('href');
+                    }                    
                 }
             });           
         } catch (QueryPath\ParseException $parseException) {
-            // Invalid XML
-        }
+            // Invalid XML              
+        }        
         
-        return $rssFeedUrl;
-    }
-    
-    
-    /**
-     * Get the URL where we expect to find the robots.txt file
-     * 
-     * @return string
-     */
-    public function getExpectedRobotsTxtFileUrl() {
-        if ($this->rootUrl->getRoot() == '') {            
-            return (string)$this->rootUrl . self::DEFAULT_SITEMAP_TXT_FILE_NAME;
-        }
-        
-        $rootUrl = new NormalisedUrl($this->rootUrl->getRoot());        
-        $rootUrl->setPath('/'.self::ROBOTS_TXT_FILE_NAME);
-        
-        return (string)$rootUrl;
-    }  
-    
-    
-    private function getPossibleSitemapUrls() {
-       $sitemapUrlFromRobotsTxt = $this->findSitemapUrlFromRobotsTxt();
-       if ($sitemapUrlFromRobotsTxt === false) {
-           return array(
-               $this->getDefaultSitemapXmlUrl(),
-               $this->getDefaultSitemapTxtUrl()
-           );
-       }
-       
-       return array($sitemapUrlFromRobotsTxt);
-    }
-    
-    
-    /**
-     *
-     * @return string
-     */
-    private function getDefaultSitemapXmlUrl() {
-        $absoluteUrlDeriver = new \webignition\AbsoluteUrlDeriver\AbsoluteUrlDeriver(
-               '/' . self::DEFAULT_SITEMAP_XML_FILE_NAME,
-               $this->getRootUrl()
-        );
-        
-        return (string)$absoluteUrlDeriver->getAbsoluteUrl();
-    }
-    
-    
-    /**
-     *
-     * @return string
-     */
-    private function getDefaultSitemapTxtUrl() {
-        $absoluteUrlDeriver = new \webignition\AbsoluteUrlDeriver\AbsoluteUrlDeriver(
-               '/' . self::DEFAULT_SITEMAP_TXT_FILE_NAME,
-               $this->getRootUrl()
-        );
-        
-        return (string)$absoluteUrlDeriver->getAbsoluteUrl();
-    } 
-    
-    
-    private function findSitemapUrlFromRobotsTxt() {
-        $robotsTxtParser = new \webignition\RobotsTxt\File\Parser();
-        $robotsTxtParser->setSource($this->getRobotsTxtContent());        
-        $robotsTxtFile = $robotsTxtParser->getFile();
-        
-        if ($robotsTxtFile->directiveList()->containsField('sitemap')) {
-            return (string)$robotsTxtFile->directiveList()->filter(array('field', 'sitemap'))->first()->getValue();         
-        }
-        
-        return false;
+        libxml_use_internal_errors(false);        
+        return $this->feedUrls = $feedUrls;
     }
     
     
@@ -182,6 +158,19 @@ class WebsiteRssFeedFinder {
      * @return WebPage 
      */
     private function getRootWebPage() {        
+        if (is_null($this->rootWebPage)) {
+            $this->rootWebPage = $this->retrieveRootWebPage();
+        }
+        
+        return $this->rootWebPage;
+    }
+    
+    
+    /**
+     *
+     * @return boolean|\webignition\WebResource\WebPage\WebPage 
+     */
+    private function retrieveRootWebPage() {
         $request = new \HttpRequest($this->getRootUrl());        
         $response = $this->getHttpClient()->getResponse($request);       
         
@@ -198,21 +187,7 @@ class WebsiteRssFeedFinder {
         } catch (\webignition\WebResource\Exception $exception) {
             // Invalid content type (is not the URL of a web page)
             return false;
-        }
-    }
-    
-    
-    /**
-     *
-     * @return \webignition\WebsiteSitemapFinder\SitemapIdentifier
-     */
-    private function sitemapIdentifier() {
-        if (is_null($this->sitemapIdentifier)) {
-            $this->sitemapIdentifier = new \webignition\WebsiteSitemapFinder\SitemapIdentifier();
-            $this->sitemapIdentifier->setHttpClient($this->getHttpClient());
-        }
-        
-        return $this->sitemapIdentifier;
+        }        
     }
     
 }

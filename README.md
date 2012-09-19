@@ -55,7 +55,7 @@ Have look at the [project on travis][4] for the latest build status, or give the
 a go yourself.
 
     cd ~/website-rss-feed-finder
-    phpunit tests
+    phpunit
 
 An instance of `WebsiteRssFeedFinder` can be passed an HTTP client with which
 to retrieve the content of the specified sitemap URL.

@@ -172,7 +172,12 @@ class WebsiteRssFeedFinder {
      */
     private function retrieveRootWebPage() {
         $request = new \HttpRequest($this->getRootUrl());        
-        $response = $this->getHttpClient()->getResponse($request);       
+        
+        try {
+            $response = $this->getHttpClient()->getResponse($request);
+        } catch (\webignition\Http\Client\Exception $httpClientException) {
+            return false;
+        }        
         
         if (!$response->getResponseCode() == 200) {
             return false;

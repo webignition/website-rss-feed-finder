@@ -51,6 +51,8 @@ class WebsiteRssFeedFinder {
      */
     public function setRootUrl($rootUrl) {        
         $this->rootUrl = new NormalisedUrl($rootUrl);
+        $this->feedUrls = array();
+        $this->rootWebPage = null;
         return $this;
     }
     
@@ -118,6 +120,10 @@ class WebsiteRssFeedFinder {
             }
         }
         
+        if (!isset($this->feedUrls[$rel]) || !isset($this->feedUrls[$rel][$type])) { 
+            return null;
+        }
+        
         return $this->feedUrls[$rel][$type];
     }
     
@@ -133,7 +139,7 @@ class WebsiteRssFeedFinder {
         $feedUrls = array();
         $supportedFeedTypes = $this->supportedFeedTypes;
         try {            
-            $rootWebPage->find('link[rel=alternate]')->each(function ($index, \DOMElement $domElement) use (&$feedUrls, $supportedFeedTypes) {
+            $rootWebPage->find('link[rel=alternate]')->each(function ($index, \DOMElement $domElement) use (&$feedUrls, $supportedFeedTypes) {                
                 foreach ($supportedFeedTypes as $supportedFeedType) {                
                     if ($domElement->getAttribute('type') == $supportedFeedType) {
                         if (!isset($feedUrls['alternate'])) {
@@ -146,7 +152,7 @@ class WebsiteRssFeedFinder {
             });           
         } catch (QueryPath\ParseException $parseException) {
             // Invalid XML              
-        }        
+        }
         
         libxml_use_internal_errors(false);        
         return $this->feedUrls = $feedUrls;

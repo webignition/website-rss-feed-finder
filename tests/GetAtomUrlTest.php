@@ -10,7 +10,7 @@ class GetAtomUrlTest extends PHPUnit_Framework_TestCase {
         $finder->setHttpClient($httpClient);
         $finder->setRootUrl('http://www.geekyportal.com/');
         
-        $this->assertEquals('http://www.geekyportal.com/feeds/posts/default', $finder->getAtomFeedUrl());        
+        $this->assertEquals(array('http://www.geekyportal.com/feeds/posts/default'), $finder->getAtomFeedUrls());        
     }    
     
 }

@@ -10,7 +10,7 @@ class GetRssUrlTest extends PHPUnit_Framework_TestCase {
         $finder->setHttpClient($httpClient);
         $finder->setRootUrl('http://codinghorror.com/blog/');
         
-        $this->assertEquals('http://feeds.feedburner.com/codinghorror/', $finder->getRssFeedUrl());        
+        $this->assertEquals(array('http://feeds.feedburner.com/codinghorror/'), $finder->getRssFeedUrls());        
     }    
     
 }

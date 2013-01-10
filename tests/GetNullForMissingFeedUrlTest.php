@@ -10,10 +10,10 @@ class GetnUllForMissingFeedUrlTest extends PHPUnit_Framework_TestCase {
         $finder->setHttpClient($httpClient);
         
         $finder->setRootUrl('http://codinghorror.com/blog/');        
-        $this->assertNull($finder->getAtomFeedUrl());        
+        $this->assertNull($finder->getAtomFeedUrls());        
         
         $finder->setRootUrl('http://geekyportal.com/');        
-        $this->assertNull($finder->getRssFeedUrl());           
+        $this->assertNull($finder->getRssFeedUrls());           
     }    
     
 }

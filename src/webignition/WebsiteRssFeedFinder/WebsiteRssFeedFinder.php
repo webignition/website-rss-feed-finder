@@ -93,7 +93,7 @@ class WebsiteRssFeedFinder {
      *
      * @return string
      */
-    public function getRssFeedUrl() {
+    public function getRssFeedUrls() {
         return $this->getLinkHref('alternate', 'application/rss+xml');
     }
     
@@ -102,7 +102,7 @@ class WebsiteRssFeedFinder {
      *
      * @return string
      */
-    public function getAtomFeedUrl() {
+    public function getAtomFeedUrls() {
         return $this->getLinkHref('alternate', 'application/atom+xml');
     }
     
@@ -146,7 +146,13 @@ class WebsiteRssFeedFinder {
                             $feedUrls['alternate'] = array();
                         }
                         
-                        $feedUrls['alternate'][$supportedFeedType] = $domElement->getAttribute('href');
+                        if (!isset($feedUrls['alternate'][$supportedFeedType])) {
+                            $feedUrls['alternate'][$supportedFeedType] = array();
+                        }
+                        
+                        if (!in_array($domElement->getAttribute('href'), $feedUrls['alternate'][$supportedFeedType])) {
+                            $feedUrls['alternate'][$supportedFeedType][] = $domElement->getAttribute('href');
+                        }
                     }                    
                 }
             });           
@@ -183,7 +189,7 @@ class WebsiteRssFeedFinder {
             $response = $this->getHttpClient()->getResponse($request);
         } catch (\webignition\Http\Client\Exception $httpClientException) {
             return false;
-        }        
+        }
         
         if (!$response->getResponseCode() == 200) {
             return false;

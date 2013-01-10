@@ -91,7 +91,7 @@ class WebsiteRssFeedFinder {
     
     /**
      *
-     * @return string
+     * @return array
      */
     public function getRssFeedUrls() {
         return $this->getLinkHref('alternate', 'application/rss+xml');
@@ -100,7 +100,7 @@ class WebsiteRssFeedFinder {
     
     /**
      *
-     * @return string
+     * @return array
      */
     public function getAtomFeedUrls() {
         return $this->getLinkHref('alternate', 'application/atom+xml');

@@ -80,7 +80,7 @@ class WebsiteRssFeedFinder {
      *
      * @return \Guzzle\Http\Client
      */
-    private function getHttpClient() {
+    public function getHttpClient() {
         if (is_null($this->httpClient)) {
             $this->httpClient = new \Guzzle\Http\Client();
         }

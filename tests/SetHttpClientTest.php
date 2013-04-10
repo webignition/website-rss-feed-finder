@@ -8,7 +8,9 @@ class SetHttpClientTest extends PHPUnit_Framework_TestCase {
         $httpClient = new HttpClient();
         
         $finder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
-        $finder->setHttpClient($httpClient);    
+        $finder->setHttpClient($httpClient);  
+        
+        $this->assertInstanceOf('\Guzzle\Http\Client', $finder->getHttpClient());
     }    
     
 }

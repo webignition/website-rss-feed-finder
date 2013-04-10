@@ -1,13 +1,14 @@
 <?php
 
-class GetAtomUrlTest extends PHPUnit_Framework_TestCase {
+class GetAtomUrlTest extends BaseTest {
+    
+    public function setUp() {
+        $this->setHttpFixtures($this->getHttpFixtures($this->getFixturesDataPath(__CLASS__, $this->getName() . '/HttpResponses')));
+    }    
 
-    public function testGetGeekyPortalAtomUrl() {        
-        $httpClient = new \webignition\Http\Mock\Client\Client();        
-        $httpClient->getStoredResponseList()->setFixturesPath(__DIR__ . '/fixtures');
-        
+    public function testGetSingleAtomUrl() {
         $finder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
-        $finder->setHttpClient($httpClient);
+        $finder->setHttpClient($this->getHttpClient());
         $finder->setRootUrl('http://www.geekyportal.com/');
         
         $this->assertEquals(array('http://www.geekyportal.com/feeds/posts/default'), $finder->getAtomFeedUrls());        

@@ -183,22 +183,18 @@ class WebsiteRssFeedFinder {
      * @return boolean|\webignition\WebResource\WebPage\WebPage 
      */
     private function retrieveRootWebPage() {
-        $request = new \HttpRequest($this->getRootUrl());        
+        $request = $this->getHttpClient()->get($this->getRootUrl());
         
         try {
-            $response = $this->getHttpClient()->getResponse($request);
-        } catch (\webignition\Http\Client\Exception $httpClientException) {
-            return false;
-        }
-        
-        if (!$response->getResponseCode() == 200) {
+            $response = $request->send();          
+        } catch (\Guzzle\Http\Exception\RequestException $requestException) {
             return false;
         }
         
         try {
             $webPage = new WebPage();
             $webPage->setContentType($response->getHeader('content-type'));
-            $webPage->setContent($response->getBody());
+            $webPage->setContent($response->getBody(true));
 
             return $webPage;            
         } catch (\webignition\WebResource\Exception $exception) {

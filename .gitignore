@@ -3,3 +3,4 @@
 
 # Composer
 /vendor
+/composer.phar

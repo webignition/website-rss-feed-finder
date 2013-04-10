@@ -1,13 +1,14 @@
 <?php
 
-class GetnUllForMissingFeedUrlTest extends PHPUnit_Framework_TestCase {
+class GetNullForMissingFeedUrlTest extends BaseTest {
+    
+    public function setUp() {
+        $this->setHttpFixtures($this->getHttpFixtures($this->getFixturesDataPath(__CLASS__, $this->getName() . '/HttpResponses')));
+    }       
 
-    public function testGetNullForMissingFeedUrl() {        
-        $httpClient = new \webignition\Http\Mock\Client\Client();        
-        $httpClient->getStoredResponseList()->setFixturesPath(__DIR__ . '/fixtures');
-        
+    public function testGetNullForMissingFeedUrl() {
         $finder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
-        $finder->setHttpClient($httpClient);
+        $finder->setHttpClient($this->getHttpClient());
         
         $finder->setRootUrl('http://codinghorror.com/blog/');        
         $this->assertNull($finder->getAtomFeedUrls());        

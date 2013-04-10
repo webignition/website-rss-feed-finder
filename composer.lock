@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "5f0d2cf085a13d42916ddae4a18fc228",
+    "hash": "724c25b4b8cde136668efb3c1e381b4e",
     "packages": [
         {
             "name": "guzzle/guzzle",
@@ -320,6 +320,47 @@
                 "string"
             ],
             "time": "2013-03-18 14:32:24"
+        },
+        {
+            "name": "webignition/url",
+            "version": "1.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/url.git",
+                "reference": "1.7.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webignition/url/zipball/1.7.2",
+                "reference": "1.7.2",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "Represents a URL, a library to be used in many other places. Applies semantically-lossless normalisation for comparisons.",
+            "homepage": "https://github.com/webignition/url",
+            "keywords": [
+                "url"
+            ],
+            "time": "2013-04-05 15:56:13"
         },
         {
             "name": "webignition/web-page-model",

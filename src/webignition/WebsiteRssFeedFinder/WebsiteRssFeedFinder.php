@@ -3,6 +3,7 @@ namespace webignition\WebsiteRssFeedFinder;
 
 use webignition\NormalisedUrl\NormalisedUrl;
 use webignition\WebResource\WebPage\WebPage;
+use Guzzle\Http\Client as HttpClient;
 
 /**
  *  
@@ -11,7 +12,7 @@ class WebsiteRssFeedFinder {
     
     /**
      *
-     * @var \webignition\Http\Client\Client
+     * @var \Guzzle\Http\Client
      */
     private $httpClient = null;
     
@@ -68,21 +69,20 @@ class WebsiteRssFeedFinder {
     
     /**
      *
-     * @param \webignition\Http\Client\Client $client 
+     * @param \Guzzle\Http\Client $client 
      */
-    public function setHttpClient(\webignition\Http\Client\Client $client) {
+    public function setHttpClient(\Guzzle\Http\Client $client) {
         $this->httpClient = $client;
     }
     
     
     /**
      *
-     * @return \webignition\Http\Client\Client 
+     * @return \Guzzle\Http\Client
      */
     private function getHttpClient() {
         if (is_null($this->httpClient)) {
-            $this->httpClient = new \webignition\Http\Client\Client();
-            $this->httpClient->redirectHandler()->enable();
+            $this->httpClient = new \Guzzle\Http\Client();
         }
         
         return $this->httpClient;

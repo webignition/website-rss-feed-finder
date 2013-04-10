@@ -1,29 +1,25 @@
 <?php
 
-class GetRssUrlTest extends BaseTest {
+class GetRootWebPageErrorTest extends BaseTest {
     
     public function setUp() {
         $this->setHttpFixtures($this->getHttpFixtures($this->getFixturesDataPath(__CLASS__, $this->getName() . '/HttpResponses')));
     }       
 
-    public function testGetSingleRssUrl() {        
+    public function testHandleHttpClientError() {        
         $finder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
         $finder->setHttpClient($this->getHttpClient());
-        $finder->setRootUrl('http://codinghorror.com/blog/');
+        $finder->setRootUrl('http://example.com/');
         
-        $this->assertEquals(array('http://feeds.feedburner.com/codinghorror/'), $finder->getRssFeedUrls());        
+        $this->assertNull($finder->getRssFeedUrls());        
     } 
     
-    public function testGetMultipleRssUrls() {        
+    public function testHandleHttpServerError() {        
         $finder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
         $finder->setHttpClient($this->getHttpClient());
-        $finder->setRootUrl('http://korben.info/');
-
+        $finder->setRootUrl('http://example.com/');
         
-        $this->assertEquals(array(
-            'http://korben.info/feed',
-            'http://korben.info/wp-content/plugins/nextgen-gallery/xml/media-rss.php'
-        ), $finder->getRssFeedUrls()); 
+        $this->assertNull($finder->getRssFeedUrls());        
     }     
     
     

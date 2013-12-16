@@ -10,6 +10,15 @@ use Guzzle\Http\Client as HttpClient;
  */
 class WebsiteRssFeedFinder {
     
+    const HTTP_AUTH_BASIC_NAME = 'Basic';
+    const HTTP_AUTH_DIGEST_NAME = 'Digest';
+    
+    
+    private $httpAuthNameToCurlAuthScheme = array(
+        self::HTTP_AUTH_BASIC_NAME => CURLAUTH_BASIC,
+        self::HTTP_AUTH_DIGEST_NAME => CURLAUTH_DIGEST
+    );     
+    
     /**
      *
      * @var \Guzzle\Http\Client
@@ -38,11 +47,59 @@ class WebsiteRssFeedFinder {
      */
     private $feedUrls = array();
     
+    /**
+     *
+     * @var string
+     */
+    private $httpAuthenticationUser = '';
+    
+    /**
+     *
+     * @var string
+     */
+    private $httpAuthenticationPassword = '';      
+    
     
     private $supportedFeedTypes = array(
         'application/rss+xml',
         'application/atom+xml'
     );
+    
+    
+    /**
+     * 
+     * @param string $user
+     */
+    public function setHttpAuthenticationUser($user) {
+        $this->httpAuthenticationUser = $user;
+    }
+    
+    
+    /**
+     * 
+     * @param string $password
+     */
+    public function setHttpAuthenticationPassword($password) {
+        $this->httpAuthenticationPassword = $password;
+    }
+    
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getHttpAuthenticationUser() {
+        return $this->httpAuthenticationUser;
+    }
+    
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getHttpAuthenticationPassword() {
+        return $this->httpAuthenticationPassword;
+    }    
     
     
     /**
@@ -186,10 +243,10 @@ class WebsiteRssFeedFinder {
         $request = $this->getHttpClient()->get($this->getRootUrl());
         
         try {
-            $response = $request->send();          
+            $response = $this->getRootWebPageResourceResponse($request);          
         } catch (\Guzzle\Http\Exception\RequestException $requestException) {
             return false;
-        }
+        }        
         
         try {
             $webPage = new WebPage();
@@ -202,5 +259,44 @@ class WebsiteRssFeedFinder {
             return false;
         }        
     }
+    
+    
+    private function getRootWebPageResourceResponse(\Guzzle\Http\Message\Request $request, $failOnAuthenticationFailure = false) {
+        try {
+            return $request->send();     
+        } catch (\Guzzle\Http\Exception\ClientErrorResponseException $clientErrorResponseException) {            
+            /* @var $response \Guzzle\Http\Message\Response */
+            $response = $clientErrorResponseException->getResponse();                        
+            $authenticationScheme = $this->getWwwAuthenticateSchemeFromResponse($response);                        
+            
+            if (is_null($authenticationScheme) || $failOnAuthenticationFailure) {
+                throw $clientErrorResponseException;
+            }            
+
+            $request->setAuth($this->getHttpAuthenticationUser(), $this->getHttpAuthenticationPassword(), $this->getWwwAuthenticateSchemeFromResponse($response));
+            return $this->getRootWebPageResourceResponse($request, true);
+        }        
+    }   
+    
+    
+    /**
+     * 
+     * @param \Guzzle\Http\Message\Response $response
+     * @return int|null
+     */
+    private function getWwwAuthenticateSchemeFromResponse(\Guzzle\Http\Message\Response $response) {
+        if ($response->getStatusCode() !== 401) {
+            return null;
+        }
+        
+        if (!$response->hasHeader('www-authenticate')) {
+            return null;
+        }        
+              
+        $wwwAuthenticateHeaderValues = $response->getHeader('www-authenticate')->toArray();
+        $firstLineParts = explode(' ', $wwwAuthenticateHeaderValues[0]);
+
+        return (isset($this->httpAuthNameToCurlAuthScheme[$firstLineParts[0]])) ? $this->httpAuthNameToCurlAuthScheme[$firstLineParts[0]] : null;    
+    }     
     
 }

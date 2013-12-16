@@ -24,7 +24,21 @@ class GetRssUrlTest extends BaseTest {
             'http://korben.info/feed',
             'http://korben.info/wp-content/plugins/nextgen-gallery/xml/media-rss.php'
         ), $finder->getRssFeedUrls()); 
-    }     
+    } 
+    
+    
+    public function testForHttpAuthProtectedSite() {
+        $finder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
+        $finder->setHttpClient($this->getHttpClient());
+        $finder->setRootUrl('http://example.com/');
+        
+        $finder->setHttpAuthenticationUser('example');
+        $finder->setHttpAuthenticationPassword('password');
+        
+        $this->assertEquals(array(
+            'http://example.com/feed.xml'
+        ), $finder->getRssFeedUrls());         
+    }
     
     
 }

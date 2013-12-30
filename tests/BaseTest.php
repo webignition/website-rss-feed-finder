@@ -13,6 +13,13 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase {
     
     
     /**
+     *
+     * @var \webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder
+     */
+    private $feedFinder = null;
+    
+    
+    /**
      * 
      * @return \Guzzle\Http\Client
      */
@@ -65,6 +72,21 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase {
      */
     protected function getFixturesDataPath($className, $testName) {        
         return __DIR__ . '/fixtures/' . str_replace('\\', DIRECTORY_SEPARATOR, $className) . '/' . $testName;
+    }
+    
+    
+    
+    /**
+     * 
+     * @return \webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder
+     */
+    protected function getFeedFinder() {
+        if (is_null($this->feedFinder)) {
+            $this->feedFinder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
+            $this->feedFinder->setBaseRequest($this->getHttpClient()->get());
+        }
+        
+        return $this->feedFinder;
     }
     
     

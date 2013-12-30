@@ -7,8 +7,7 @@ class GetNullForMissingFeedUrlTest extends BaseTest {
     }       
 
     public function testGetNullForMissingFeedUrl() {
-        $finder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
-        $finder->setHttpClient($this->getHttpClient());
+        $finder = $this->getFeedFinder();
         
         $finder->setRootUrl('http://codinghorror.com/blog/');        
         $this->assertNull($finder->getAtomFeedUrls());        

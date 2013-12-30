@@ -7,16 +7,14 @@ class GetRootWebPageErrorTest extends BaseTest {
     }       
 
     public function testHandleHttpClientError() {        
-        $finder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
-        $finder->setHttpClient($this->getHttpClient());
+        $finder = $this->getFeedFinder();
         $finder->setRootUrl('http://example.com/');
         
         $this->assertNull($finder->getRssFeedUrls());        
     } 
     
     public function testHandleHttpServerError() {        
-        $finder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
-        $finder->setHttpClient($this->getHttpClient());
+        $finder = $this->getFeedFinder();
         $finder->setRootUrl('http://example.com/');
         
         $this->assertNull($finder->getRssFeedUrls());        

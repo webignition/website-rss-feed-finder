@@ -7,18 +7,15 @@ class GetRssUrlTest extends BaseTest {
     }       
 
     public function testGetSingleRssUrl() {        
-        $finder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
-        $finder->setHttpClient($this->getHttpClient());
+        $finder = $this->getFeedFinder();
         $finder->setRootUrl('http://codinghorror.com/blog/');
         
         $this->assertEquals(array('http://feeds.feedburner.com/codinghorror/'), $finder->getRssFeedUrls());        
     } 
     
     public function testGetMultipleRssUrls() {        
-        $finder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
-        $finder->setHttpClient($this->getHttpClient());
+        $finder = $this->getFeedFinder();
         $finder->setRootUrl('http://korben.info/');
-
         
         $this->assertEquals(array(
             'http://korben.info/feed',
@@ -28,12 +25,9 @@ class GetRssUrlTest extends BaseTest {
     
     
     public function testForHttpAuthProtectedSite() {
-        $finder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
-        $finder->setHttpClient($this->getHttpClient());
-        $finder->setRootUrl('http://example.com/');
-        
-        $finder->setHttpAuthenticationUser('example');
-        $finder->setHttpAuthenticationPassword('password');
+        $finder = $this->getFeedFinder();
+        $finder->setRootUrl('http://example.com/');        
+        $finder->getBaseRequest()->setAuth('example', 'password', 'any');
         
         $this->assertEquals(array(
             'http://example.com/feed.xml'

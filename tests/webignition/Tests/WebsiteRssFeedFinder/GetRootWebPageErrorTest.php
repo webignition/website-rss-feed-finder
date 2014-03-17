@@ -10,14 +10,14 @@ class GetRootWebPageErrorTest extends BaseTest {
 
     public function testHandleHttpClientError() {        
         $finder = $this->getFeedFinder();
-        $finder->setRootUrl('http://example.com/');
+        $finder->getConfiguration()->setRootUrl('http://example.com/');
         
         $this->assertNull($finder->getRssFeedUrls());        
     } 
     
     public function testHandleHttpServerError() {        
         $finder = $this->getFeedFinder();
-        $finder->setRootUrl('http://example.com/');
+        $finder->getConfiguration()->setRootUrl('http://example.com/');
         
         $this->assertNull($finder->getRssFeedUrls());        
     }     

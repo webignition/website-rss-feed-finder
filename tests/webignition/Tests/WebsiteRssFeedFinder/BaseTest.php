@@ -85,7 +85,7 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase {
     protected function getFeedFinder() {
         if (is_null($this->feedFinder)) {
             $this->feedFinder = new \webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
-            $this->feedFinder->setBaseRequest($this->getHttpClient()->get());
+            $this->feedFinder->getConfiguration()->setBaseRequest($this->getHttpClient()->get());
         }
         
         return $this->feedFinder;

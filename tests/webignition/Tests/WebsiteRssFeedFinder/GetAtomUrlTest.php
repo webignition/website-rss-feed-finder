@@ -10,7 +10,7 @@ class GetAtomUrlTest extends BaseTest {
 
     public function testGetSingleAtomUrl() {
         $finder = $this->getFeedFinder();
-        $finder->setRootUrl('http://www.example.com/');
+        $finder->getConfiguration()->setRootUrl('http://www.example.com/');
         
         $this->assertEquals(array('http://www.geekyportal.com/feeds/posts/default'), $finder->getAtomFeedUrls());        
     }    
@@ -18,7 +18,7 @@ class GetAtomUrlTest extends BaseTest {
     
     public function testGetMultipleAtomUrls() {
         $finder = $this->getFeedFinder();
-        $finder->setRootUrl('http://www.geekyportal.com/');
+        $finder->getConfiguration()->setRootUrl('http://www.geekyportal.com/');
         
         $this->assertEquals(array(
             'http://www.geekyportal.com/feeds/posts/default',

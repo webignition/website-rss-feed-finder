@@ -10,14 +10,14 @@ class GetRssUrlTest extends BaseTest {
 
     public function testGetSingleRssUrl() {        
         $finder = $this->getFeedFinder();
-        $finder->setRootUrl('http://codinghorror.com/blog/');
+        $finder->getConfiguration()->setRootUrl('http://codinghorror.com/blog/');
         
         $this->assertEquals(array('http://feeds.feedburner.com/codinghorror/'), $finder->getRssFeedUrls());        
     } 
     
     public function testGetMultipleRssUrls() {        
         $finder = $this->getFeedFinder();
-        $finder->setRootUrl('http://korben.info/');
+        $finder->getConfiguration()->setRootUrl('http://korben.info/');
         
         $this->assertEquals(array(
             'http://korben.info/feed',
@@ -28,8 +28,8 @@ class GetRssUrlTest extends BaseTest {
     
     public function testForHttpAuthProtectedSite() {
         $finder = $this->getFeedFinder();
-        $finder->setRootUrl('http://example.com/');        
-        $finder->getBaseRequest()->setAuth('example', 'password', 'any');
+        $finder->getConfiguration()->setRootUrl('http://example.com/');        
+        $finder->getConfiguration()->getBaseRequest()->setAuth('example', 'password', 'any');
         
         $this->assertEquals(array(
             'http://example.com/feed.xml'

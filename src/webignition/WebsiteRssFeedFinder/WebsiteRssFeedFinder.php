@@ -7,21 +7,7 @@ use webignition\WebResource\WebPage\WebPage;
 /**
  *  
  */
-class WebsiteRssFeedFinder {    
-    
-    /**
-     *
-     * @var \Guzzle\Http\Message\Request
-     */
-    private $baseRequest = null;
-    
-    
-    /**
-     *
-     * @var \webignition\NormalisedUrl\NormalisedUrl 
-     */
-    private $rootUrl = null;
-    
+class WebsiteRssFeedFinder {
     
     /**
      *
@@ -45,48 +31,33 @@ class WebsiteRssFeedFinder {
     
     
     /**
-     * 
-     * @param \Guzzle\Http\Message\Request $request
+     *
+     * @var \webignition\WebsiteRssFeedFinder\Configuration 
      */
-    public function setBaseRequest(\Guzzle\Http\Message\Request $request) {
-        $this->baseRequest = $request;
+    private $configuration;
+    
+    
+    /**
+     * 
+     * @return \webignition\WebsiteRssFeedFinder\Configuration
+     */
+    public function getConfiguration() {
+        if (is_null($this->configuration)) {
+            $this->configuration = new \webignition\WebsiteRssFeedFinder\Configuration();
+        }
+        
+        return $this->configuration;
     }
     
     
-    
     /**
      * 
-     * @return \Guzzle\Http\Message\Request $request
+     * @return \webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder
      */
-    public function getBaseRequest() {
-        if (is_null($this->baseRequest)) {
-            $client = new \Guzzle\Http\Client;            
-            $this->baseRequest = $client->get();
-        }
-        
-        return $this->baseRequest;
-    } 
-    
-    
-    /**
-     *
-     * @param string $rootUrl
-     * @return \webignition\WebsiteSitemapFinder\WebsiteSitemapFinder 
-     */
-    public function setRootUrl($rootUrl) {        
-        $this->rootUrl = new NormalisedUrl($rootUrl);
+    public function reset() {
         $this->feedUrls = array();
         $this->rootWebPage = null;
         return $this;
-    }
-    
-    
-    /**
-     *
-     * @return string
-     */
-    public function getRootUrl() {
-        return (is_null($this->rootUrl)) ? '' : (string)$this->rootUrl;
     }
 
     
@@ -184,8 +155,8 @@ class WebsiteRssFeedFinder {
      * @return boolean|\webignition\WebResource\WebPage\WebPage 
      */
     private function retrieveRootWebPage() {
-        $request = clone $this->getBaseRequest();
-        $request->setUrl($this->getRootUrl());
+        $request = clone $this->getConfiguration()->getBaseRequest();
+        $request->setUrl($this->getConfiguration()->getRootUrl());
         
         try {
             $response = $request->send();

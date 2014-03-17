@@ -9,12 +9,14 @@ class GetNullForMissingFeedUrlTest extends BaseTest {
     }       
 
     public function testGetNullForMissingFeedUrl() {
-        $finder = $this->getFeedFinder();
+        $finder = $this->getFeedFinder();        
         
-        $finder->setRootUrl('http://codinghorror.com/blog/');        
+        $finder->getConfiguration()->setRootUrl('http://codinghorror.com/blog/');                
+        $finder->reset();
         $this->assertNull($finder->getAtomFeedUrls());        
         
-        $finder->setRootUrl('http://geekyportal.com/');        
+        $finder->getConfiguration()->setRootUrl('http://geekyportal.com/');        
+        $finder->reset();
         $this->assertNull($finder->getRssFeedUrls());           
     }    
     

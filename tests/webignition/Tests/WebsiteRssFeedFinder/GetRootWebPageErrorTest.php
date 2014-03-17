@@ -1,5 +1,7 @@
 <?php
 
+namespace webignition\Tests\WebsiteRssFeedFinder;
+
 class GetRootWebPageErrorTest extends BaseTest {
     
     public function setUp() {

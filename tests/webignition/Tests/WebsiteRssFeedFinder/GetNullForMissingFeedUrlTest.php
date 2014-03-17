@@ -1,5 +1,7 @@
 <?php
 
+namespace webignition\Tests\WebsiteRssFeedFinder;
+
 class GetNullForMissingFeedUrlTest extends BaseTest {
     
     public function setUp() {

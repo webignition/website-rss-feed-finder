@@ -1,8 +1,10 @@
 <?php
 
+namespace webignition\Tests\WebsiteRssFeedFinder;
+
 use Guzzle\Http\Client as HttpClient;
 
-abstract class BaseTest extends PHPUnit_Framework_TestCase {
+abstract class BaseTest extends \PHPUnit_Framework_TestCase {
     
         
     /**
@@ -71,7 +73,7 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase {
      * @return string
      */
     protected function getFixturesDataPath($className, $testName) {        
-        return __DIR__ . '/fixtures/' . str_replace('\\', DIRECTORY_SEPARATOR, $className) . '/' . $testName;
+        return __DIR__ . '/../../../fixtures/' . str_replace('\\', DIRECTORY_SEPARATOR, $className) . '/' . $testName;
     }
     
     
@@ -82,7 +84,7 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase {
      */
     protected function getFeedFinder() {
         if (is_null($this->feedFinder)) {
-            $this->feedFinder = new webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
+            $this->feedFinder = new \webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
             $this->feedFinder->setBaseRequest($this->getHttpClient()->get());
         }
         

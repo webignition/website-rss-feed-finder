@@ -1,5 +1,7 @@
 <?php
 
+namespace webignition\Tests\WebsiteRssFeedFinder;
+
 class GetRssUrlTest extends BaseTest {
     
     public function setUp() {

@@ -5,15 +5,11 @@ namespace webignition\Tests\WebsiteRssFeedFinder;
 class GetNullForMissingFeedUrlTest extends GetFeedUrlTest {    
 
     public function testGetNullForMissingFeedUrl() {
-        $finder = $this->getFeedFinder();        
-        
-        $finder->getConfiguration()->setRootUrl('http://codinghorror.com/blog/');                
-        $finder->reset();
-        $this->assertNull($finder->getAtomFeedUrls());        
-        
-        $finder->getConfiguration()->setRootUrl('http://geekyportal.com/');        
-        $finder->reset();
-        $this->assertNull($finder->getRssFeedUrls());           
+        // Note: each of the below uses a different root web page
+        // The first root web page lacks atom urls
+        // The second root web page lacks rss urls
+        $this->assertNull($this->getFeedFinder()->reset()->getAtomFeedUrls());               
+        $this->assertNull($this->getFeedFinder()->reset()->getRssFeedUrls());                          
     }    
     
 }

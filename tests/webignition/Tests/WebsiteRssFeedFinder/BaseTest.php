@@ -28,11 +28,29 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase {
     protected function getHttpClient() {
         if (is_null($this->httpClient)) {
             $this->httpClient = new HttpClient();
+            $this->httpClient->addSubscriber(new \Guzzle\Plugin\History\HistoryPlugin());
         }
         
         return $this->httpClient;
     }   
     
+    
+    /**
+     * 
+     * @return \Guzzle\Plugin\History\HistoryPlugin|null
+     */
+    protected function getHttpHistory() {
+        $listenerCollections = $this->getHttpClient()->getEventDispatcher()->getListeners('request.sent');
+        
+        foreach ($listenerCollections as $listener) {
+            if ($listener[0] instanceof \Guzzle\Plugin\History\HistoryPlugin) {
+                return $listener[0];
+            }
+        }
+        
+        return null;     
+    }   
+        
     
     protected function setHttpFixtures($fixtures) {
         $plugin = new \Guzzle\Plugin\Mock\MockPlugin();
@@ -72,8 +90,14 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase {
      * @param string $testName
      * @return string
      */
-    protected function getFixturesDataPath($className, $testName) {        
-        return __DIR__ . '/../../../fixtures/' . str_replace('\\', DIRECTORY_SEPARATOR, $className) . '/' . $testName;
+    protected function getFixturesDataPath($className, $testName = null) {        
+        $path = __DIR__ . '/../../../fixtures/' . str_replace('\\', DIRECTORY_SEPARATOR, $className);
+        
+        if (!is_null($testName)) {
+            $path .=  '/' . $testName;
+        }
+        
+        return $path;
     }
     
     
@@ -90,6 +114,47 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase {
         
         return $this->feedFinder;
     }
+    
+    
+    /**
+     * 
+     * @param array $items Collection of http messages and/or curl exceptions
+     * @return array
+     */
+    protected function buildHttpFixtureSet($items) {
+        $fixtures = array();
+        
+        foreach ($items as $item) {
+            switch ($this->getHttpFixtureItemType($item)) {
+                case 'httpMessage':
+                    $fixtures[] = \Guzzle\Http\Message\Response::fromMessage($item);
+                    break;
+                
+                case 'curlException':
+                    $fixtures[] = $this->getCurlExceptionFromCurlMessage($item);                    
+                    break;
+                
+                default:
+                    throw new \LogicException();
+            }
+        }
+        
+        return $fixtures;
+    }
+    
+    
+    /**
+     * 
+     * @param string $item
+     * @return string
+     */
+    private function getHttpFixtureItemType($item) {
+        if (substr($item, 0, strlen('HTTP')) == 'HTTP') {
+            return 'httpMessage';
+        }
+        
+        return 'curlException';
+    }     
     
     
 }

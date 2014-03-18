@@ -155,8 +155,9 @@ class WebsiteRssFeedFinder {
      * @return boolean|\webignition\WebResource\WebPage\WebPage 
      */
     private function retrieveRootWebPage() {
-        $request = clone $this->getConfiguration()->getBaseRequest();
+        $request = clone $this->getConfiguration()->getBaseRequest();        
         $request->setUrl($this->getConfiguration()->getRootUrl());
+        $this->setRequestCookies($request);
         
         try {
             $response = $request->send();
@@ -174,6 +175,27 @@ class WebsiteRssFeedFinder {
             // Invalid content type (is not the URL of a web page)
             return false;
         }        
+    }
+    
+    
+    /**
+     * 
+     * @param \Guzzle\Http\Message\Request $request
+     */
+    private function setRequestCookies(\Guzzle\Http\Message\Request $request) {
+        if (!is_null($request->getCookies())) {
+            foreach ($request->getCookies() as $name => $value) {
+                $request->removeCookie($name);
+            }
+        }        
+        
+        $cookieUrlMatcher = new \webignition\Cookie\UrlMatcher\UrlMatcher();
+        
+        foreach ($this->getConfiguration()->getCookies() as $cookie) {
+            if ($cookieUrlMatcher->isMatch($cookie, $request->getUrl())) {
+                $request->addCookie($cookie['name'], $cookie['value']);
+            }
+        } 
     }    
     
 }

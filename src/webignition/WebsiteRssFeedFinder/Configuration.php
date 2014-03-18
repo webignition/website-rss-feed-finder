@@ -23,6 +23,34 @@ class Configuration {
     
     
     /**
+     *
+     * @var array
+     */
+    private $cookies = array();       
+    
+    
+    /**
+     * 
+     * @param array $cookies
+     * @return \webignition\WebsiteRssFeedFinder\Configuration
+     */
+    public function setCookies($cookies) {
+        $this->cookies = $cookies;
+        return $this;
+    }
+    
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getCookies() {
+        return $this->cookies;
+    }         
+    
+    
+    
+    /**
      * 
      * @param \Guzzle\Http\Message\Request $request
      * @return \webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder

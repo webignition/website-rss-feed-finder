@@ -1,6 +1,8 @@
 <?php
 
-namespace webignition\Tests\WebsiteRssFeedFinder;
+namespace webignition\Tests\WebsiteRssFeedFinder\GetFeedUrls;
+
+use webignition\Tests\WebsiteRssFeedFinder\BaseTest;
 
 abstract class GetFeedUrlTest extends BaseTest {
     

@@ -1,6 +1,6 @@
 <?php
 
-namespace webignition\Tests\WebsiteRssFeedFinder;
+namespace webignition\Tests\WebsiteRssFeedFinder\GetFeedUrls;
 
 class GetRootWebPageErrorTest extends GetFeedUrlTest {
 

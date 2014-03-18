@@ -1,8 +1,10 @@
 <?php
 
-namespace webignition\Tests\WebsiteRssFeedFinder\GetFeedUrls;
+namespace webignition\Tests\WebsiteRssFeedFinder\GetFeedUrls\Atom;
 
-class GetAtomUrlTest extends GetFeedUrlTest { 
+use webignition\Tests\WebsiteRssFeedFinder\GetFeedUrls\GetFeedUrlsTest;
+
+class GetUrlsTest extends GetFeedUrlsTest { 
 
     public function testGetSingleAtomUrl() {        
         $this->assertEquals(array('http://example.com/atom-1.xml'), $this->getFeedFinder()->getAtomFeedUrls());        

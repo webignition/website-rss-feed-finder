@@ -2,7 +2,7 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder\GetFeedUrls;
 
-class GetRootWebPageErrorTest extends GetFeedUrlTest {
+class GetRootWebPageErrorTest extends GetFeedUrlsTest {
 
     public function testHandleHttpClientError() {                
         $this->assertNull($this->getFeedFinder()->getRssFeedUrls());        

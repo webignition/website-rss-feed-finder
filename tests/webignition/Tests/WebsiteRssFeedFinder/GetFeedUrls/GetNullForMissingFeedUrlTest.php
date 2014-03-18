@@ -2,7 +2,7 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder\GetFeedUrls;
 
-class GetNullForMissingFeedUrlTest extends GetFeedUrlTest {    
+class GetNullForMissingFeedUrlTest extends GetFeedUrlsTest {    
 
     public function testGetNullForMissingFeedUrl() {
         // Note: each of the below uses a different root web page

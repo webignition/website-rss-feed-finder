@@ -1,8 +1,10 @@
 <?php
 
-namespace webignition\Tests\WebsiteRssFeedFinder\GetFeedUrls;
+namespace webignition\Tests\WebsiteRssFeedFinder\GetFeedUrls\Rss;
 
-class GetRssUrlTest extends GetFeedUrlTest {      
+use webignition\Tests\WebsiteRssFeedFinder\GetFeedUrls\GetFeedUrlsTest;
+
+class GetUrlsTest extends GetFeedUrlsTest {      
 
     public function testGetSingleRssUrl() {                
         $this->assertEquals(array('http://example.com/rss-1.xml'), $this->getFeedFinder()->getRssFeedUrls());        

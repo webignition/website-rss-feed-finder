@@ -4,7 +4,7 @@ namespace webignition\Tests\WebsiteRssFeedFinder\GetFeedUrls;
 
 use webignition\Tests\WebsiteRssFeedFinder\BaseTest;
 
-abstract class GetFeedUrlTest extends BaseTest {
+abstract class GetFeedUrlsTest extends BaseTest {
     
     const ROOT_WEB_PAGE_URL = 'http://www.example.com/';
     

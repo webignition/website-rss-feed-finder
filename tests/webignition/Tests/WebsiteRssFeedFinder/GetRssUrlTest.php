@@ -2,11 +2,7 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder;
 
-class GetRssUrlTest extends BaseTest {
-    
-    public function setUp() {
-        $this->setHttpFixtures($this->getHttpFixtures($this->getFixturesDataPath(__CLASS__, $this->getName() . '/HttpResponses')));
-    }       
+class GetRssUrlTest extends GetFeedUrlTest {      
 
     public function testGetSingleRssUrl() {        
         $finder = $this->getFeedFinder();

@@ -2,27 +2,23 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder;
 
-class GetAtomUrlTest extends BaseTest {
-    
-    public function setUp() {
-        $this->setHttpFixtures($this->getHttpFixtures($this->getFixturesDataPath(__CLASS__, $this->getName() . '/HttpResponses')));
-    }    
+class GetAtomUrlTest extends GetFeedUrlTest { 
 
     public function testGetSingleAtomUrl() {
         $finder = $this->getFeedFinder();
         $finder->getConfiguration()->setRootUrl('http://www.example.com/');
         
-        $this->assertEquals(array('http://www.geekyportal.com/feeds/posts/default'), $finder->getAtomFeedUrls());        
+        $this->assertEquals(array('http://example.com/atom.xml'), $finder->getAtomFeedUrls());        
     }    
     
     
     public function testGetMultipleAtomUrls() {
         $finder = $this->getFeedFinder();
-        $finder->getConfiguration()->setRootUrl('http://www.geekyportal.com/');
+        $finder->getConfiguration()->setRootUrl('http://www.example.com/');
         
         $this->assertEquals(array(
-            'http://www.geekyportal.com/feeds/posts/default',
-            'http://www.geekyportal.com/feeds/posts/alternative'            
+            'http://example.com/atom-1.xml',
+            'http://example.com/atom-2.xml'            
         ), $finder->getAtomFeedUrls());        
     }        
     

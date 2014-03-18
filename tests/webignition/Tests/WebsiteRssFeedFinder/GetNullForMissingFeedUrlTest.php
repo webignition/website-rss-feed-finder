@@ -2,11 +2,7 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder;
 
-class GetNullForMissingFeedUrlTest extends BaseTest {
-    
-    public function setUp() {
-        $this->setHttpFixtures($this->getHttpFixtures($this->getFixturesDataPath(__CLASS__, $this->getName() . '/HttpResponses')));
-    }       
+class GetNullForMissingFeedUrlTest extends GetFeedUrlTest {    
 
     public function testGetNullForMissingFeedUrl() {
         $finder = $this->getFeedFinder();        

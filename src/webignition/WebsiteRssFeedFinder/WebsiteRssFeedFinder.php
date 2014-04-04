@@ -167,9 +167,7 @@ class WebsiteRssFeedFinder {
         
         try {
             $webPage = new WebPage();
-            $webPage->setContentType($response->getHeader('content-type'));
-            $webPage->setContent($response->getBody(true));
-
+            $webPage->setHttpResponse($response);
             return $webPage;            
         } catch (\webignition\WebResource\Exception $exception) {
             // Invalid content type (is not the URL of a web page)

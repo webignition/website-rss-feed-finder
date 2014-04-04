@@ -3,8 +3,76 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "69cb890afdbe671ce49ae6faf0ae64e5",
+    "hash": "6b8708db0f369801a901de58a2bf69a9",
     "packages": [
+        {
+            "name": "doctrine/collections",
+            "version": "v1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/collections.git",
+                "reference": "b99c5c46c87126201899afe88ec490a25eedd6a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/b99c5c46c87126201899afe88ec490a25eedd6a2",
+                "reference": "b99c5c46c87126201899afe88ec490a25eedd6a2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\Common\\Collections\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com",
+                    "homepage": "http://www.jwage.com/",
+                    "role": "Creator"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com",
+                    "homepage": "http://www.instaclick.com"
+                },
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com",
+                    "homepage": "http://jmsyst.com",
+                    "role": "Developer of wrapped JMSSerializerBundle"
+                }
+            ],
+            "description": "Collections Abstraction library",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "array",
+                "collections",
+                "iterator"
+            ],
+            "time": "2014-02-03 23:07:43"
+        },
         {
             "name": "etechnika/idna-convert",
             "version": "1.0.3",
@@ -247,6 +315,53 @@
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
             "time": "2014-02-11 13:52:09"
+        },
+        {
+            "name": "webignition/character-set-list",
+            "version": "0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/character-set-list.git",
+                "reference": "fb82d4ef04ac5ee37492c4084d3e98d350f1ac2a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webignition/character-set-list/zipball/fb82d4ef04ac5ee37492c4084d3e98d350f1ac2a",
+                "reference": "fb82d4ef04ac5ee37492c4084d3e98d350f1ac2a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "symfony/class-loader": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "webignition\\Tests": "tests/",
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "List of official names for character sets",
+            "homepage": "https://github.com/webignition/character-set-list",
+            "keywords": [
+                "character",
+                "list",
+                "set"
+            ],
+            "time": "2014-03-27 09:49:56"
         },
         {
             "name": "webignition/cookie-domain-matcher",
@@ -522,16 +637,16 @@
         },
         {
             "name": "webignition/url",
-            "version": "1.9.9",
+            "version": "1.9.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/url.git",
-                "reference": "cc8c3d9a9d90edf735f0a70f690cca6124ee1136"
+                "reference": "7df6141958c65957d3c692791eb8e07ace0cf147"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/url/zipball/cc8c3d9a9d90edf735f0a70f690cca6124ee1136",
-                "reference": "cc8c3d9a9d90edf735f0a70f690cca6124ee1136",
+                "url": "https://api.github.com/repos/webignition/url/zipball/7df6141958c65957d3c692791eb8e07ace0cf147",
+                "reference": "7df6141958c65957d3c692791eb8e07ace0cf147",
                 "shasum": ""
             },
             "require": {
@@ -560,31 +675,38 @@
             "keywords": [
                 "url"
             ],
-            "time": "2014-03-07 13:33:36"
+            "time": "2014-03-25 09:43:12"
         },
         {
             "name": "webignition/web-page-model",
-            "version": "0.6",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/web-page-model.git",
-                "reference": "5ef875a2a4e2863aae7a26820d31ad5f2072afb1"
+                "reference": "e6c97344f61a02bf93ca9ca5401c09902bb0c0fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/web-page-model/zipball/5ef875a2a4e2863aae7a26820d31ad5f2072afb1",
-                "reference": "5ef875a2a4e2863aae7a26820d31ad5f2072afb1",
+                "url": "https://api.github.com/repos/webignition/web-page-model/zipball/e6c97344f61a02bf93ca9ca5401c09902bb0c0fa",
+                "reference": "e6c97344f61a02bf93ca9ca5401c09902bb0c0fa",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
                 "querypath/querypath": ">=3.0.0",
+                "webignition/character-set-list": ">=0.2,<1.0",
                 "webignition/internet-media-type": ">=0.1,<1.0",
-                "webignition/web-resource-model": ">=0.1,<2.0"
+                "webignition/web-resource-model": ">=1.1.2,<2.0"
+            },
+            "require-dev": {
+                "guzzle/guzzle": ">=3.8.1,<4",
+                "phpunit/phpunit": "3.7.*",
+                "symfony/class-loader": "*"
             },
             "type": "library",
             "autoload": {
                 "psr-0": {
+                    "webignition\\Tests": "tests/",
                     "": "src/"
                 }
             },
@@ -604,32 +726,40 @@
                 "model",
                 "webpage"
             ],
-            "time": "2013-09-05 16:13:43"
+            "time": "2014-03-27 23:39:29"
         },
         {
             "name": "webignition/web-resource-model",
-            "version": "0.4",
+            "version": "1.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/web-resource-model.git",
-                "reference": "0.4"
+                "reference": "72d6dce1468f9003e97cee9d3323723e3c634142"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/webignition/web-resource-model/zipball/0.4",
-                "reference": "0.4",
+                "url": "https://api.github.com/repos/webignition/web-resource-model/zipball/72d6dce1468f9003e97cee9d3323723e3c634142",
+                "reference": "72d6dce1468f9003e97cee9d3323723e3c634142",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0",
+                "doctrine/collections": "~1.0",
+                "guzzle/guzzle": ">=3.8.1,<4",
+                "php": ">=5.4.0",
                 "webignition/internet-media-type": ">=0.1,<2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "symfony/class-loader": "*"
             },
             "type": "library",
             "autoload": {
                 "psr-0": {
+                    "webignition\\Tests": "tests/",
                     "": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -645,7 +775,7 @@
                 "modem",
                 "web"
             ],
-            "time": "2012-08-16 15:16:06"
+            "time": "2014-04-02 23:23:58"
         },
         {
             "name": "xrstf/ip-utils",

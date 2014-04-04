@@ -19,8 +19,8 @@
     }, 
     "require": {
         "php": ">=5.3.0",
-        "webignition/internet-media-type":">=0.1,<2.0",
-        "webignition/web-page-model":">=0.1,<2.0",
+        "webignition/internet-media-type":">=0.1,<1.0",
+        "webignition/web-page-model":">=1.0.2,<2.0",
         "guzzle/guzzle":">=3.8.1",
         "webignition/url":">=1.7.2,<2.0",
         "webignition/cookie-url-matcher":">=0.1,<1.0"

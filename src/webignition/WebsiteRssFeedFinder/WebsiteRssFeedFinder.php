@@ -1,8 +1,13 @@
 <?php
 namespace webignition\WebsiteRssFeedFinder;
 
-use webignition\NormalisedUrl\NormalisedUrl;
+use Guzzle\Http\Exception\RequestException;
+use Guzzle\Http\Message\Request as GuzzleRequest;
+use QueryPath\ParseException;
+use webignition\Cookie\UrlMatcher\UrlMatcher;
+use webignition\WebResource\Exception as WebResourceException;
 use webignition\WebResource\WebPage\WebPage;
+use webignition\WebsiteRssFeedFinder\Configuration;
 
 /**
  *
@@ -29,18 +34,18 @@ class WebsiteRssFeedFinder
 
     /**
      *
-     * @var \webignition\WebsiteRssFeedFinder\Configuration
+     * @var Configuration
      */
     private $configuration;
 
     /**
      *
-     * @return \webignition\WebsiteRssFeedFinder\Configuration
+     * @return Configuration
      */
     public function getConfiguration()
     {
         if (is_null($this->configuration)) {
-            $this->configuration = new \webignition\WebsiteRssFeedFinder\Configuration();
+            $this->configuration = new Configuration();
         }
 
         return $this->configuration;
@@ -79,7 +84,8 @@ class WebsiteRssFeedFinder
      *
      * @param string $rel
      * @param string $type
-     * @return string
+     *
+     * @return string[]
      */
     private function getLinkHref($rel, $type)
     {
@@ -134,7 +140,7 @@ class WebsiteRssFeedFinder
                             }
                         }
                     });
-        } catch (QueryPath\ParseException $parseException) {
+        } catch (ParseException $parseException) {
             // Invalid XML
         }
 
@@ -157,7 +163,7 @@ class WebsiteRssFeedFinder
 
     /**
      *
-     * @return boolean|\webignition\WebResource\WebPage\WebPage
+     * @return boolean|WebPage
      */
     private function retrieveRootWebPage()
     {
@@ -167,7 +173,7 @@ class WebsiteRssFeedFinder
 
         try {
             $response = $request->send();
-        } catch (\Guzzle\Http\Exception\RequestException $requestException) {
+        } catch (RequestException $requestException) {
             return false;
         }
 
@@ -175,7 +181,7 @@ class WebsiteRssFeedFinder
             $webPage = new WebPage();
             $webPage->setHttpResponse($response);
             return $webPage;
-        } catch (\webignition\WebResource\Exception $exception) {
+        } catch (WebResourceException $exception) {
             // Invalid content type (is not the URL of a web page)
             return false;
         }
@@ -183,9 +189,9 @@ class WebsiteRssFeedFinder
 
     /**
      *
-     * @param \Guzzle\Http\Message\Request $request
+     * @param GuzzleRequest $request
      */
-    private function setRequestCookies(\Guzzle\Http\Message\Request $request)
+    private function setRequestCookies(GuzzleRequest $request)
     {
         if (!is_null($request->getCookies())) {
             foreach ($request->getCookies() as $name => $value) {
@@ -193,7 +199,7 @@ class WebsiteRssFeedFinder
             }
         }
 
-        $cookieUrlMatcher = new \webignition\Cookie\UrlMatcher\UrlMatcher();
+        $cookieUrlMatcher = new UrlMatcher();
 
         foreach ($this->getConfiguration()->getCookies() as $cookie) {
             if ($cookieUrlMatcher->isMatch($cookie, $request->getUrl())) {

@@ -1,6 +1,8 @@
 <?php
 namespace webignition\WebsiteRssFeedFinder;
 
+use Guzzle\Http\Client as GuzzleClient;
+use Guzzle\Http\Message\Request as GuzzleRequest;
 use webignition\NormalisedUrl\NormalisedUrl;
 
 /**
@@ -10,7 +12,7 @@ class Configuration
 {
     /**
      *
-     * @var \Guzzle\Http\Message\Request
+     * @var GuzzleRequest
      */
     private $baseRequest = null;
 
@@ -29,11 +31,12 @@ class Configuration
     /**
      *
      * @param array $cookies
-     * @return \webignition\WebsiteRssFeedFinder\Configuration
+     * @return self
      */
     public function setCookies($cookies)
     {
         $this->cookies = $cookies;
+
         return $this;
     }
 
@@ -48,23 +51,24 @@ class Configuration
 
     /**
      *
-     * @param \Guzzle\Http\Message\Request $request
-     * @return \webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder
+     * @param GuzzleRequest $request
+     * @return self
      */
-    public function setBaseRequest(\Guzzle\Http\Message\Request $request)
+    public function setBaseRequest(GuzzleRequest $request)
     {
         $this->baseRequest = $request;
+
         return $this;
     }
 
     /**
      *
-     * @return \Guzzle\Http\Message\Request $request
+     * @return GuzzleRequest $request
      */
     public function getBaseRequest()
     {
         if (is_null($this->baseRequest)) {
-            $client = new \Guzzle\Http\Client;
+            $client = new GuzzleClient;
             $this->baseRequest = $client->get();
         }
 
@@ -74,11 +78,12 @@ class Configuration
     /**
      *
      * @param string $rootUrl
-     * @return \webignition\WebsiteSitemapFinder\WebsiteSitemapFinder
+     * @return self
      */
     public function setRootUrl($rootUrl)
     {
         $this->rootUrl = new NormalisedUrl($rootUrl);
+
         return $this;
     }
 

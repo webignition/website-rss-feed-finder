@@ -93,7 +93,7 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFixturesDataPath($className, $testName = null)
     {
-        $path = __DIR__ . '/../../../fixtures/' . str_replace('\\', DIRECTORY_SEPARATOR, $className);
+        $path = __DIR__ . '/fixtures/' . str_replace('\\', DIRECTORY_SEPARATOR, $className);
 
         if (!is_null($testName)) {
             $path .=  '/' . $testName;

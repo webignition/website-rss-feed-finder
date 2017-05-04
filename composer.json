@@ -12,9 +12,9 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "webignition\\Tests": "tests/",
-            "": "src/"
+        "psr-4": {
+            "webignition\\WebsiteRssFeedFinder\\": "src/",
+            "webignition\\Tests\\WebsiteRssFeedFinder\\": "tests/"
         }
     },
     "scripts": {

@@ -4,14 +4,15 @@ namespace webignition\Tests\WebsiteRssFeedFinder\GetFeedUrls\HttpErrorRetrieving
 
 use webignition\Tests\WebsiteRssFeedFinder\GetFeedUrls\GetFeedUrlsTest;
 
-class ServerErrorTest extends GetFeedUrlsTest {
-    
-    protected function getExpectedFeedUrls() {
+class ServerErrorTest extends GetFeedUrlsTest
+{
+    protected function getExpectedFeedUrls()
+    {
         return null;
-    }    
+    }
 
-    protected function getFeedUrls() {
+    protected function getFeedUrls()
+    {
         return $this->getFeedFinder()->getRssFeedUrls();
     }
-    
 }

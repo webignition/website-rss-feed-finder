@@ -2,9 +2,10 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder\Cookies\Domain;
 
-class NotMatchTest extends DomainTest {   
-    
-    protected function getCookies() {
+class NotMatchTest extends DomainTest
+{
+    protected function getCookies()
+    {
         return array(
             array(
                 'domain' => '.foo.example.com',
@@ -14,11 +15,13 @@ class NotMatchTest extends DomainTest {
         );
     }
 
-    protected function getExpectedRequestsOnWhichCookiesShouldBeSet() {
+    protected function getExpectedRequestsOnWhichCookiesShouldBeSet()
+    {
         return array();
     }
 
-    protected function getExpectedRequestsOnWhichCookiesShouldNotBeSet() {        
+    protected function getExpectedRequestsOnWhichCookiesShouldNotBeSet()
+    {
         return $this->getAllSentHttpRequests();
-    }    
+    }
 }

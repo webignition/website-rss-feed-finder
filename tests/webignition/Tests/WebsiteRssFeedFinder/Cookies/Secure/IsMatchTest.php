@@ -2,17 +2,20 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder\Cookies\Secure;
 
-class IsMatchTest extends SecureTest {   
-    
-    protected function getRootUrl() {
+class IsMatchTest extends SecureTest
+{
+    protected function getRootUrl()
+    {
         return 'https://example.com/';
     }
 
-    protected function getExpectedRequestsOnWhichCookiesShouldBeSet() {
+    protected function getExpectedRequestsOnWhichCookiesShouldBeSet()
+    {
         return $this->getAllSentHttpRequests();
     }
 
-    protected function getExpectedRequestsOnWhichCookiesShouldNotBeSet() {
+    protected function getExpectedRequestsOnWhichCookiesShouldNotBeSet()
+    {
         return array();
-    }    
+    }
 }

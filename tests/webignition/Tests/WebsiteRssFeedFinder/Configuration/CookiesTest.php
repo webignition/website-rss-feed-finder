@@ -2,18 +2,20 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder\Configuration;
 
-class CookiesTest extends ConfigurationTest {
-    
-    public function testGetDefaultCookieCollection() {        
+class CookiesTest extends ConfigurationTest
+{
+    public function testGetDefaultCookieCollection()
+    {
         $this->assertEquals(array(), $this->configuration->getCookies());
     }
-    
-    
-    public function testSetReturnsSelf() {
+
+    public function testSetReturnsSelf()
+    {
         $this->assertEquals($this->configuration, $this->configuration->setCookies(array()));
     }
-    
-    public function testSetGetCookies() {        
+
+    public function testSetGetCookies()
+    {
         $cookies = array(
             array(
                 'name' => 'name1',
@@ -29,10 +31,9 @@ class CookiesTest extends ConfigurationTest {
                 'secure' => true,
                 'name' => 'name3',
                 'value' => 'value3'
-            )                        
+            )
         );
-        
+
         $this->assertEquals($cookies, $this->configuration->setCookies($cookies)->getCookies());
-    }    
-    
+    }
 }

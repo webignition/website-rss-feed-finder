@@ -2,9 +2,10 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder\Cookies\Path;
 
-class NotMatchTest extends PathTest {   
-    
-    protected function getCookies() {
+class NotMatchTest extends PathTest
+{
+    protected function getCookies()
+    {
         return array(
             array(
                 'domain' => '.example.com',
@@ -15,11 +16,13 @@ class NotMatchTest extends PathTest {
         );
     }
 
-    protected function getExpectedRequestsOnWhichCookiesShouldBeSet() {
+    protected function getExpectedRequestsOnWhichCookiesShouldBeSet()
+    {
         return array();
     }
 
-    protected function getExpectedRequestsOnWhichCookiesShouldNotBeSet() {        
+    protected function getExpectedRequestsOnWhichCookiesShouldNotBeSet()
+    {
         return $this->getAllSentHttpRequests();
-    }    
+    }
 }

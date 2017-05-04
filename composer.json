@@ -16,11 +16,11 @@
             "webignition\\Tests": "tests/",
             "": "src/"
         }
-    }, 
+    },
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.5.0",
         "webignition/internet-media-type":">=0.1,<1.0",
-        "webignition/web-page-model":">=1.0.2,<2.0",
+        "webignition/web-page-model":">=1.0.2,<=1.0.5",
         "guzzle/guzzle":">=3.8.1",
         "webignition/url":">=1.7.2,<2.0",
         "webignition/cookie-url-matcher":">=0.1,<1.0"

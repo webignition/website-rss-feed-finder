@@ -3,30 +3,34 @@
 namespace webignition\Tests\WebsiteRssFeedFinder;
 
 use Guzzle\Http\Client as HttpClient;
+use Guzzle\Http\Message\Response;
+use Guzzle\Plugin\History\HistoryPlugin;
+use Guzzle\Plugin\Mock\MockPlugin;
+use webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder;
 
 abstract class BaseTest extends \PHPUnit_Framework_TestCase
 {
     /**
      *
-     * @var \Guzzle\Http\Client
+     * @var HttpClient
      */
     private $httpClient = null;
 
     /**
      *
-     * @var \webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder
+     * @var WebsiteRssFeedFinder
      */
     private $feedFinder = null;
 
     /**
      *
-     * @return \Guzzle\Http\Client
+     * @return HttpClient
      */
     protected function getHttpClient()
     {
         if (is_null($this->httpClient)) {
             $this->httpClient = new HttpClient();
-            $this->httpClient->addSubscriber(new \Guzzle\Plugin\History\HistoryPlugin());
+            $this->httpClient->addSubscriber(new HistoryPlugin());
         }
 
         return $this->httpClient;
@@ -34,14 +38,14 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
 
     /**
      *
-     * @return \Guzzle\Plugin\History\HistoryPlugin|null
+     * @return HistoryPlugin|null
      */
     protected function getHttpHistory()
     {
         $listenerCollections = $this->getHttpClient()->getEventDispatcher()->getListeners('request.sent');
 
         foreach ($listenerCollections as $listener) {
-            if ($listener[0] instanceof \Guzzle\Plugin\History\HistoryPlugin) {
+            if ($listener[0] instanceof HistoryPlugin) {
                 return $listener[0];
             }
         }
@@ -51,7 +55,7 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
 
     protected function setHttpFixtures($fixtures)
     {
-        $plugin = new \Guzzle\Plugin\Mock\MockPlugin();
+        $plugin = new MockPlugin();
 
         foreach ($fixtures as $fixture) {
             $plugin->addResponse($fixture);
@@ -76,7 +80,7 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
         sort($fixturePathnames);
 
         foreach ($fixturePathnames as $fixturePathname) {
-                $fixtures[] = \Guzzle\Http\Message\Response::fromMessage(file_get_contents($fixturePathname));
+                $fixtures[] = Response::fromMessage(file_get_contents($fixturePathname));
         }
 
         return $fixtures;
@@ -100,12 +104,12 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
 
     /**
      *
-     * @return \webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder
+     * @return WebsiteRssFeedFinder
      */
     protected function getFeedFinder()
     {
         if (is_null($this->feedFinder)) {
-            $this->feedFinder = new \webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder();
+            $this->feedFinder = new WebsiteRssFeedFinder();
             $this->feedFinder->getConfiguration()->setBaseRequest($this->getHttpClient()->get());
         }
 
@@ -122,34 +126,9 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
         $fixtures = array();
 
         foreach ($items as $item) {
-            switch ($this->getHttpFixtureItemType($item)) {
-                case 'httpMessage':
-                    $fixtures[] = \Guzzle\Http\Message\Response::fromMessage($item);
-                    break;
-
-                case 'curlException':
-                    $fixtures[] = $this->getCurlExceptionFromCurlMessage($item);
-                    break;
-
-                default:
-                    throw new \LogicException();
-            }
+            $fixtures[] = Response::fromMessage($item);
         }
 
         return $fixtures;
-    }
-
-    /**
-     *
-     * @param string $item
-     * @return string
-     */
-    private function getHttpFixtureItemType($item)
-    {
-        if (substr($item, 0, strlen('HTTP')) == 'HTTP') {
-            return 'httpMessage';
-        }
-
-        return 'curlException';
     }
 }

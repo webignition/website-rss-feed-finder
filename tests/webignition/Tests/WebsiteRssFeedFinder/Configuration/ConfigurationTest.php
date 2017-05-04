@@ -13,7 +13,7 @@ abstract class ConfigurationTest extends BaseTest
      */
     protected $configuration;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->configuration = new Configuration();

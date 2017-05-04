@@ -2,6 +2,8 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder\Configuration;
 
+use webignition\NormalisedUrl\NormalisedUrl;
+
 class RootUrlTest extends ConfigurationTest
 {
     const ROOT_URL = 'http://example.com/';
@@ -27,7 +29,7 @@ class RootUrlTest extends ConfigurationTest
     public function testGetReturnsNormalizedUrlObject()
     {
         $this->assertInstanceOf(
-            'webignition\NormalisedUrl\NormalisedUrl',
+            NormalisedUrl::class,
             $this->configuration->setRootUrl(self::ROOT_URL)->getRootUrl()
         );
     }

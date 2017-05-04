@@ -2,11 +2,13 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder\Configuration;
 
+use Guzzle\Http\Message\Request;
+
 class BaseRequestTest extends ConfigurationTest
 {
     public function testGetDefaultBaseRequest()
     {
-        $this->assertInstanceOf('\Guzzle\Http\Message\Request', $this->configuration->getBaseRequest());
+        $this->assertInstanceOf(Request::class, $this->configuration->getBaseRequest());
     }
 
     public function testSetReturnsSelf()

@@ -6,19 +6,19 @@ use webignition\WebsiteRssFeedFinder\Configuration;
 use webignition\Tests\WebsiteRssFeedFinder\BaseTest;
 
 
-class ConfigurationTest extends BaseTest {
+abstract class ConfigurationTest extends BaseTest {
 
     /**
      *
      * @var Configuration
      */
     protected $configuration;
-    
-    
+
+
     public function setUp() {
         parent::setUp();
         $this->configuration = new Configuration();
     }
-    
-    
+
+
 }

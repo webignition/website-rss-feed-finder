@@ -1,5 +1,6 @@
 # IDE meta
 /nbproject
+/.idea
 
 # Composer
 /vendor

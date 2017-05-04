@@ -1,26 +1,30 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "6b8708db0f369801a901de58a2bf69a9",
+    "content-hash": "aa37d5063139465b510b6cc7bfcc5344",
     "packages": [
         {
             "name": "doctrine/collections",
-            "version": "v1.2",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "b99c5c46c87126201899afe88ec490a25eedd6a2"
+                "reference": "6c1e4eef75f310ea1b3e30945e9f06e652128b8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/b99c5c46c87126201899afe88ec490a25eedd6a2",
-                "reference": "b99c5c46c87126201899afe88ec490a25eedd6a2",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/6c1e4eef75f310ea1b3e30945e9f06e652128b8a",
+                "reference": "6c1e4eef75f310ea1b3e30945e9f06e652128b8a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "extra": {
@@ -39,17 +43,6 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/",
-                    "role": "Creator"
-                },
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com",
-                    "homepage": "http://www.instaclick.com"
-                },
-                {
                     "name": "Roman Borschel",
                     "email": "roman@code-factory.org"
                 },
@@ -58,10 +51,16 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
                     "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
-                    "role": "Developer of wrapped JMSSerializerBundle"
+                    "email": "schmittjoh@gmail.com"
                 }
             ],
             "description": "Collections Abstraction library",
@@ -71,7 +70,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2014-02-03 23:07:43"
+            "time": "2015-04-14T22:21:58+00:00"
         },
         {
             "name": "etechnika/idna-convert",
@@ -125,26 +124,26 @@
             "keywords": [
                 "lib"
             ],
-            "time": "2014-02-15 12:42:32"
+            "time": "2014-02-15T12:42:32+00:00"
         },
         {
             "name": "guzzle/guzzle",
-            "version": "v3.8.1",
+            "version": "v3.9.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "4de0618a01b34aa1c8c33a3f13f396dcd3882eba"
+                "url": "https://github.com/guzzle/guzzle3.git",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/4de0618a01b34aa1c8c33a3f13f396dcd3882eba",
-                "reference": "4de0618a01b34aa1c8c33a3f13f396dcd3882eba",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "php": ">=5.3.3",
-                "symfony/event-dispatcher": ">=2.1"
+                "symfony/event-dispatcher": "~2.1"
             },
             "replace": {
                 "guzzle/batch": "self.version",
@@ -171,18 +170,21 @@
                 "guzzle/stream": "self.version"
             },
             "require-dev": {
-                "doctrine/cache": "*",
-                "monolog/monolog": "1.*",
+                "doctrine/cache": "~1.3",
+                "monolog/monolog": "~1.0",
                 "phpunit/phpunit": "3.7.*",
-                "psr/log": "1.0.*",
-                "symfony/class-loader": "*",
-                "zendframework/zend-cache": "<2.3",
-                "zendframework/zend-log": "<2.3"
+                "psr/log": "~1.0",
+                "symfony/class-loader": "~2.1",
+                "zendframework/zend-cache": "2.*,<2.3",
+                "zendframework/zend-log": "2.*,<2.3"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Guzzle 5 has moved to a new package name. The package you have installed, Guzzle 3, is deprecated."
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.8-dev"
+                    "dev-master": "3.9-dev"
                 }
             },
             "autoload": {
@@ -206,7 +208,7 @@
                     "homepage": "https://github.com/guzzle/guzzle/contributors"
                 }
             ],
-            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
+            "description": "PHP HTTP client. This library is deprecated in favor of https://packagist.org/packages/guzzlehttp/guzzle",
             "homepage": "http://guzzlephp.org/",
             "keywords": [
                 "client",
@@ -217,23 +219,90 @@
                 "rest",
                 "web service"
             ],
-            "time": "2014-01-28 22:29:15"
+            "abandoned": "guzzlehttp/guzzle",
+            "time": "2015-03-18T18:23:50+00:00"
         },
         {
-            "name": "querypath/querypath",
-            "version": "3.0.2",
+            "name": "masterminds/html5",
+            "version": "2.2.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/technosophos/querypath.git",
-                "reference": "e0895d54d083144548ec3d599f1e968bba2b3efc"
+                "url": "https://github.com/Masterminds/html5-php.git",
+                "reference": "7866e93dcf0245de22378414e0c2c7350abc45af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/technosophos/querypath/zipball/e0895d54d083144548ec3d599f1e968bba2b3efc",
-                "reference": "e0895d54d083144548ec3d599f1e968bba2b3efc",
+                "url": "https://api.github.com/repos/Masterminds/html5-php/zipball/7866e93dcf0245de22378414e0c2c7350abc45af",
+                "reference": "7866e93dcf0245de22378414e0c2c7350abc45af",
                 "shasum": ""
             },
             "require": {
+                "ext-libxml": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "sami/sami": "~2.0",
+                "satooshi/php-coveralls": "1.0.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Masterminds\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Butcher",
+                    "email": "technosophos@gmail.com"
+                },
+                {
+                    "name": "Asmir Mustafic",
+                    "email": "goetas@gmail.com"
+                },
+                {
+                    "name": "Matt Farina",
+                    "email": "matt@mattfarina.com"
+                }
+            ],
+            "description": "An HTML5 parser and serializer.",
+            "homepage": "http://masterminds.github.io/html5-php",
+            "keywords": [
+                "HTML5",
+                "dom",
+                "html",
+                "parser",
+                "querypath",
+                "serializer",
+                "xml"
+            ],
+            "time": "2016-09-22T11:01:11+00:00"
+        },
+        {
+            "name": "querypath/querypath",
+            "version": "3.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/technosophos/querypath.git",
+                "reference": "6b8e2395fac61fac25bbe962f94def556cb85f7d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/technosophos/querypath/zipball/6b8e2395fac61fac25bbe962f94def556cb85f7d",
+                "reference": "6b8e2395fac61fac25bbe962f94def556cb85f7d",
+                "shasum": ""
+            },
+            "require": {
+                "masterminds/html5": "2.*",
                 "php": ">=5.3.0"
             },
             "type": "library",
@@ -258,28 +327,31 @@
                 "xml",
                 "xslt"
             ],
-            "time": "2013-05-24 02:50:10"
+            "time": "2016-08-01T22:40:30+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.4.2",
-            "target-dir": "Symfony/Component/EventDispatcher",
+            "version": "v2.8.20",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "4708b8cd41984a5ba29fe7dd40716f7f761ac501"
+                "url": "https://github.com/symfony/event-dispatcher.git",
+                "reference": "7fc8e2b4118ff316550596357325dfd92a51f531"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/4708b8cd41984a5ba29fe7dd40716f7f761ac501",
-                "reference": "4708b8cd41984a5ba29fe7dd40716f7f761ac501",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/7fc8e2b4118ff316550596357325dfd92a51f531",
+                "reference": "7fc8e2b4118ff316550596357325dfd92a51f531",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.9"
             },
             "require-dev": {
-                "symfony/dependency-injection": "~2.0"
+                "psr/log": "~1.0",
+                "symfony/config": "^2.0.5|~3.0.0",
+                "symfony/dependency-injection": "~2.6|~3.0.0",
+                "symfony/expression-language": "~2.6|~3.0.0",
+                "symfony/stopwatch": "~2.3|~3.0.0"
             },
             "suggest": {
                 "symfony/dependency-injection": "",
@@ -288,13 +360,16 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\EventDispatcher\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -303,35 +378,33 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
+                    "email": "fabien@symfony.com"
                 },
                 {
                     "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "Symfony EventDispatcher Component",
-            "homepage": "http://symfony.com",
-            "time": "2014-02-11 13:52:09"
+            "homepage": "https://symfony.com",
+            "time": "2017-04-26T16:56:54+00:00"
         },
         {
             "name": "webignition/character-set-list",
-            "version": "0.2",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/character-set-list.git",
-                "reference": "fb82d4ef04ac5ee37492c4084d3e98d350f1ac2a"
+                "reference": "bb7b4b8626972fb3b7c66dcbe69c7a6849b9ce8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/character-set-list/zipball/fb82d4ef04ac5ee37492c4084d3e98d350f1ac2a",
-                "reference": "fb82d4ef04ac5ee37492c4084d3e98d350f1ac2a",
+                "url": "https://api.github.com/repos/webignition/character-set-list/zipball/bb7b4b8626972fb3b7c66dcbe69c7a6849b9ce8c",
+                "reference": "bb7b4b8626972fb3b7c66dcbe69c7a6849b9ce8c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.4.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "3.7.*",
@@ -361,7 +434,7 @@
                 "list",
                 "set"
             ],
-            "time": "2014-03-27 09:49:56"
+            "time": "2014-04-04T13:31:41+00:00"
         },
         {
             "name": "webignition/cookie-domain-matcher",
@@ -408,7 +481,7 @@
                 "domain",
                 "hostname"
             ],
-            "time": "2014-03-14 13:26:13"
+            "time": "2014-03-14T13:26:13+00:00"
         },
         {
             "name": "webignition/cookie-path-matcher",
@@ -455,7 +528,7 @@
                 "matcher",
                 "path"
             ],
-            "time": "2014-03-14 12:33:11"
+            "time": "2014-03-14T12:33:11+00:00"
         },
         {
             "name": "webignition/cookie-url-matcher",
@@ -505,30 +578,34 @@
                 "matcher",
                 "url"
             ],
-            "time": "2014-03-14 14:04:40"
+            "time": "2014-03-14T14:04:40+00:00"
         },
         {
             "name": "webignition/internet-media-type",
-            "version": "0.4.4",
+            "version": "0.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/internet-media-type.git",
-                "reference": "de30f77c5e9d3584b8bdfba29dce5517f10c9ab1"
+                "reference": "968b95796bc682c7f554c2ec671b6a97a9d5a5b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/internet-media-type/zipball/de30f77c5e9d3584b8bdfba29dce5517f10c9ab1",
-                "reference": "de30f77c5e9d3584b8bdfba29dce5517f10c9ab1",
+                "url": "https://api.github.com/repos/webignition/internet-media-type/zipball/968b95796bc682c7f554c2ec671b6a97a9d5a5b0",
+                "reference": "968b95796bc682c7f554c2ec671b6a97a9d5a5b0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
-                "webignition/quoted-string": ">=0.1,<2.0",
-                "webignition/string-parser": ">=0.2.1, <2.0"
+                "webignition/quoted-string": ">=0.1,<1.0",
+                "webignition/string-parser": ">=0.2.2,<1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "autoload": {
                 "psr-0": {
+                    "webignition\\Tests": "tests/",
                     "": "src/"
                 }
             },
@@ -551,7 +628,7 @@
                 "media type",
                 "media-type"
             ],
-            "time": "2013-09-05 16:34:19"
+            "time": "2015-02-20T16:52:30+00:00"
         },
         {
             "name": "webignition/quoted-string",
@@ -559,12 +636,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/quoted-string.git",
-                "reference": "0.1"
+                "reference": "43fa25f8c81eaa5aef4c2376703fe90d1449fdf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/webignition/quoted-string/zipball/0.1",
-                "reference": "0.1",
+                "url": "https://api.github.com/repos/webignition/quoted-string/zipball/43fa25f8c81eaa5aef4c2376703fe90d1449fdf8",
+                "reference": "43fa25f8c81eaa5aef4c2376703fe90d1449fdf8",
                 "shasum": ""
             },
             "require": {
@@ -592,20 +669,20 @@
                 "parser",
                 "quoted-string"
             ],
-            "time": "2012-08-15 09:52:06"
+            "time": "2012-08-15T16:52:06+00:00"
         },
         {
             "name": "webignition/string-parser",
-            "version": "0.2.1",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/string-parser.git",
-                "reference": "0.2.1"
+                "reference": "eaa5a393ef3585783f6ef28558ef5183af00dcf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/string-parser/zipball/0.2.1",
-                "reference": "0.2.1",
+                "url": "https://api.github.com/repos/webignition/string-parser/zipball/eaa5a393ef3585783f6ef28558ef5183af00dcf7",
+                "reference": "eaa5a393ef3585783f6ef28558ef5183af00dcf7",
                 "shasum": ""
             },
             "require": {
@@ -633,26 +710,29 @@
                 "parser",
                 "string"
             ],
-            "time": "2013-03-18 14:32:24"
+            "time": "2014-04-23T09:31:03+00:00"
         },
         {
             "name": "webignition/url",
-            "version": "1.9.10",
+            "version": "1.9.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/url.git",
-                "reference": "7df6141958c65957d3c692791eb8e07ace0cf147"
+                "reference": "b651aed2781260d8b25a086e766f528d1b9a675e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/url/zipball/7df6141958c65957d3c692791eb8e07ace0cf147",
-                "reference": "7df6141958c65957d3c692791eb8e07ace0cf147",
+                "url": "https://api.github.com/repos/webignition/url/zipball/b651aed2781260d8b25a086e766f528d1b9a675e",
+                "reference": "b651aed2781260d8b25a086e766f528d1b9a675e",
                 "shasum": ""
             },
             "require": {
                 "etechnika/idna-convert": "1.0.*",
                 "php": ">=5.3.0",
                 "xrstf/ip-utils": "v1.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "autoload": {
@@ -675,33 +755,32 @@
             "keywords": [
                 "url"
             ],
-            "time": "2014-03-25 09:43:12"
+            "time": "2015-02-13T11:52:39+00:00"
         },
         {
             "name": "webignition/web-page-model",
-            "version": "1.0.2",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/web-page-model.git",
-                "reference": "e6c97344f61a02bf93ca9ca5401c09902bb0c0fa"
+                "reference": "0eb2920a3f2883898b0137401499271a24194381"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/web-page-model/zipball/e6c97344f61a02bf93ca9ca5401c09902bb0c0fa",
-                "reference": "e6c97344f61a02bf93ca9ca5401c09902bb0c0fa",
+                "url": "https://api.github.com/repos/webignition/web-page-model/zipball/0eb2920a3f2883898b0137401499271a24194381",
+                "reference": "0eb2920a3f2883898b0137401499271a24194381",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0",
+                "php": ">=5.5.0",
                 "querypath/querypath": ">=3.0.0",
                 "webignition/character-set-list": ">=0.2,<1.0",
                 "webignition/internet-media-type": ">=0.1,<1.0",
-                "webignition/web-resource-model": ">=1.1.2,<2.0"
+                "webignition/web-resource-model": ">=1.1.9,<1.2"
             },
             "require-dev": {
                 "guzzle/guzzle": ">=3.8.1,<4",
-                "phpunit/phpunit": "3.7.*",
-                "symfony/class-loader": "*"
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "autoload": {
@@ -726,31 +805,30 @@
                 "model",
                 "webpage"
             ],
-            "time": "2014-03-27 23:39:29"
+            "time": "2017-05-04T16:10:03+00:00"
         },
         {
             "name": "webignition/web-resource-model",
-            "version": "1.1.7",
+            "version": "1.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/web-resource-model.git",
-                "reference": "72d6dce1468f9003e97cee9d3323723e3c634142"
+                "reference": "08e6dc46608cfe9754ca84991eefd23842536cb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/web-resource-model/zipball/72d6dce1468f9003e97cee9d3323723e3c634142",
-                "reference": "72d6dce1468f9003e97cee9d3323723e3c634142",
+                "url": "https://api.github.com/repos/webignition/web-resource-model/zipball/08e6dc46608cfe9754ca84991eefd23842536cb7",
+                "reference": "08e6dc46608cfe9754ca84991eefd23842536cb7",
                 "shasum": ""
             },
             "require": {
                 "doctrine/collections": "~1.0",
                 "guzzle/guzzle": ">=3.8.1,<4",
                 "php": ">=5.4.0",
-                "webignition/internet-media-type": ">=0.1,<2.0"
+                "webignition/internet-media-type": ">=0.4.6,<2.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*",
-                "symfony/class-loader": "*"
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "autoload": {
@@ -775,7 +853,7 @@
                 "modem",
                 "web"
             ],
-            "time": "2014-04-02 23:23:58"
+            "time": "2015-02-19T22:53:21+00:00"
         },
         {
             "name": "xrstf/ip-utils",
@@ -823,23 +901,17 @@
                 "matching",
                 "subnet"
             ],
-            "time": "2013-02-27 03:27:30"
+            "time": "2013-02-27T03:27:30+00:00"
         }
     ],
-    "packages-dev": [
-
-    ],
-    "aliases": [
-
-    ],
+    "packages-dev": [],
+    "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ],
+    "stability-flags": [],
+    "prefer-stable": true,
+    "prefer-lowest": false,
     "platform": {
-        "php": ">=5.3.0"
+        "php": ">=5.5.0"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }

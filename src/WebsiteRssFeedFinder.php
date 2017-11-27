@@ -1,117 +1,116 @@
 <?php
 namespace webignition\WebsiteRssFeedFinder;
 
-use Guzzle\Http\Exception\RequestException;
-use Guzzle\Http\Message\Request as GuzzleRequest;
 use QueryPath\ParseException;
-use webignition\Cookie\UrlMatcher\UrlMatcher;
-use webignition\WebResource\Exception as WebResourceException;
+use webignition\WebResource\Service\Configuration as WebResourceServiceConfiguration;
 use webignition\WebResource\WebPage\WebPage;
-use webignition\WebsiteRssFeedFinder\Configuration;
+use webignition\WebResource\Service\Service as WebResourceService;
+use webignition\WebResource\WebResource;
 
-/**
- *
- */
 class WebsiteRssFeedFinder
 {
     /**
-     *
      * @var WebPage
      */
     private $rootWebPage = null;
 
     /**
-     * Collection of feed urls
-     *
      * @var array
      */
-    private $feedUrls = array();
-
-    private $supportedFeedTypes = array(
-        'application/rss+xml',
-        'application/atom+xml'
-    );
+    private $feedUrls = [];
 
     /**
-     *
+     * @var string[]
+     */
+    private $supportedFeedTypes = [
+        'application/rss+xml',
+        'application/atom+xml'
+    ];
+
+    /**
      * @var Configuration
      */
     private $configuration;
 
     /**
-     *
+     * @var WebResourceService
+     */
+    private $webResourceService;
+
+    /**
+     * @param Configuration $configuration
+     */
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
+
+        $webResourceServiceConfiguration = new WebResourceServiceConfiguration([
+            WebResourceServiceConfiguration::CONFIG_ALLOW_UNKNOWN_RESOURCE_TYPES => false,
+            WebResourceServiceConfiguration::CONFIG_KEY_CONTENT_TYPE_WEB_RESOURCE_MAP => [
+                'text/html' => WebPage::class,
+            ],
+            WebResourceServiceConfiguration::CONFIG_KEY_HTTP_CLIENT => $this->configuration->getHttpClient(),
+            WebResourceServiceConfiguration::CONFIG_ALLOW_UNKNOWN_RESOURCE_TYPES => true,
+        ]);
+
+        $this->webResourceService = new WebResourceService();
+        $this->webResourceService->setConfiguration($webResourceServiceConfiguration);
+    }
+
+    /**
      * @return Configuration
      */
     public function getConfiguration()
     {
-        if (is_null($this->configuration)) {
-            $this->configuration = new Configuration();
-        }
-
         return $this->configuration;
     }
 
     /**
-     *
-     * @return \webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder
-     */
-    public function reset()
-    {
-        $this->feedUrls = array();
-        $this->rootWebPage = null;
-        return $this;
-    }
-
-    /**
-     *
-     * @return array
+     * @return string[]
      */
     public function getRssFeedUrls()
     {
-        return $this->getLinkHref('alternate', 'application/rss+xml');
+        return $this->getLinkHref('application/rss+xml');
     }
 
     /**
-     *
-     * @return array
+     * @return string[]
      */
     public function getAtomFeedUrls()
     {
-        return $this->getLinkHref('alternate', 'application/atom+xml');
+        return $this->getLinkHref('application/atom+xml');
     }
 
     /**
-     *
-     * @param string $rel
      * @param string $type
      *
      * @return string[]
      */
-    private function getLinkHref($rel, $type)
+    private function getLinkHref($type)
     {
-        if (!isset($this->feedUrls[$rel]) || !isset($this->feedUrls[$rel][$type])) {
-            if (!$this->findFeedUrls()) {
-                return null;
+        if (!isset($this->feedUrls[$type])) {
+            if (false === $this->findFeedUrls()) {
+                return [];
             }
         }
 
-        if (!isset($this->feedUrls[$rel]) || !isset($this->feedUrls[$rel][$type])) {
-            return null;
+        if (!isset($this->feedUrls[$type])) {
+            return [];
         }
 
-        return $this->feedUrls[$rel][$type];
+        return $this->feedUrls[$type];
     }
 
     private function findFeedUrls()
     {
         $rootWebPage = $this->getRootWebPage();
-        if ($rootWebPage == false) {
+        if (!$rootWebPage instanceof WebPage) {
             return false;
         }
 
         libxml_use_internal_errors(true);
 
-        $feedUrls = array();
+        $feedUrls = [];
         $supportedFeedTypes = $this->supportedFeedTypes;
         try {
             $rootWebPage
@@ -120,26 +119,23 @@ class WebsiteRssFeedFinder
                     function ($index, \DOMElement $domElement) use (&$feedUrls, $supportedFeedTypes) {
                         foreach ($supportedFeedTypes as $supportedFeedType) {
                             if ($domElement->getAttribute('type') == $supportedFeedType) {
-                                if (!isset($feedUrls['alternate'])) {
-                                    $feedUrls['alternate'] = array();
-                                }
-
-                                if (!isset($feedUrls['alternate'][$supportedFeedType])) {
-                                    $feedUrls['alternate'][$supportedFeedType] = array();
+                                if (!isset($feedUrls[$supportedFeedType])) {
+                                    $feedUrls[$supportedFeedType] = [];
                                 }
 
                                 $hasSupportedFeedType = in_array(
                                     $domElement->getAttribute('href'),
-                                    $feedUrls['alternate'][$supportedFeedType]
+                                    $feedUrls[$supportedFeedType]
                                 );
 
                                 if (!$hasSupportedFeedType) {
-                                    $feedUrls['alternate'][$supportedFeedType][] =
+                                    $feedUrls[$supportedFeedType][] =
                                         $domElement->getAttribute('href');
                                 }
                             }
                         }
-                    });
+                    }
+                );
         } catch (ParseException $parseException) {
             // Invalid XML
         }
@@ -149,7 +145,6 @@ class WebsiteRssFeedFinder
     }
 
     /**
-     *
      * @return WebPage
      */
     private function getRootWebPage()
@@ -162,49 +157,17 @@ class WebsiteRssFeedFinder
     }
 
     /**
-     *
-     * @return boolean|WebPage
+     * @return WebResource
      */
     private function retrieveRootWebPage()
     {
-        $request = clone $this->getConfiguration()->getBaseRequest();
-        $request->setUrl($this->getConfiguration()->getRootUrl());
-        $this->setRequestCookies($request);
+        $httpClient = $this->configuration->getHttpClient();
+        $request = $httpClient->createRequest('GET', $this->configuration->getRootUrl());
 
         try {
-            $response = $request->send();
-        } catch (RequestException $requestException) {
-            return false;
-        }
-
-        try {
-            $webPage = new WebPage();
-            $webPage->setHttpResponse($response);
-            return $webPage;
-        } catch (WebResourceException $exception) {
-            // Invalid content type (is not the URL of a web page)
-            return false;
-        }
-    }
-
-    /**
-     *
-     * @param GuzzleRequest $request
-     */
-    private function setRequestCookies(GuzzleRequest $request)
-    {
-        if (!is_null($request->getCookies())) {
-            foreach ($request->getCookies() as $name => $value) {
-                $request->removeCookie($name);
-            }
-        }
-
-        $cookieUrlMatcher = new UrlMatcher();
-
-        foreach ($this->getConfiguration()->getCookies() as $cookie) {
-            if ($cookieUrlMatcher->isMatch($cookie, $request->getUrl())) {
-                $request->addCookie($cookie['name'], $cookie['value']);
-            }
+            return $this->webResourceService->get($request);
+        } catch (\Exception $exception) {
+            return null;
         }
     }
 }

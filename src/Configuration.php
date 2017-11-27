@@ -1,90 +1,53 @@
 <?php
 namespace webignition\WebsiteRssFeedFinder;
 
-use Guzzle\Http\Client as GuzzleClient;
-use Guzzle\Http\Message\Request as GuzzleRequest;
+use GuzzleHttp\Client as HttpClient;
 use webignition\NormalisedUrl\NormalisedUrl;
 
-/**
- *
- */
 class Configuration
 {
     /**
-     *
-     * @var GuzzleRequest
+     * @var HttpClient
      */
-    private $baseRequest = null;
+    private $httpClient;
 
     /**
-     *
-     * @var \webignition\NormalisedUrl\NormalisedUrl
+     * @var NormalisedUrl
      */
     private $rootUrl = null;
 
-    /**
-     *
-     * @var array
-     */
-    private $cookies = array();
-
-    /**
-     *
-     * @param array $cookies
-     * @return self
-     */
-    public function setCookies($cookies)
+    public function __construct()
     {
-        $this->cookies = $cookies;
-
-        return $this;
+        $this->httpClient = new HttpClient();
     }
 
     /**
-     *
-     * @return array
+     * @param HttpClient $httpClient
      */
-    public function getCookies()
+    public function setHttpClient(HttpClient $httpClient)
     {
-        return $this->cookies;
+        $this->httpClient = $httpClient;
     }
 
     /**
-     *
-     * @param GuzzleRequest $request
-     * @return self
+     * @return HttpClient
      */
-    public function setBaseRequest(GuzzleRequest $request)
+    public function getHttpClient()
     {
-        $this->baseRequest = $request;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @return GuzzleRequest $request
-     */
-    public function getBaseRequest()
-    {
-        if (is_null($this->baseRequest)) {
-            $client = new GuzzleClient;
-            $this->baseRequest = $client->get();
-        }
-
-        return $this->baseRequest;
+        return $this->httpClient;
     }
 
     /**
      *
      * @param string $rootUrl
-     * @return self
      */
     public function setRootUrl($rootUrl)
     {
-        $this->rootUrl = new NormalisedUrl($rootUrl);
+        $rootUrl = trim($rootUrl);
 
-        return $this;
+        $this->rootUrl = (empty($rootUrl))
+            ? null
+            : new NormalisedUrl($rootUrl);
     }
 
     /**

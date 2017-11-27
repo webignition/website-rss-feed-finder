@@ -5,3 +5,4 @@
 # Composer
 /vendor
 /composer.phar
+/build/

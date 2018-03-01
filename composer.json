@@ -25,12 +25,30 @@
             "@composer test"
         ]
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/webignition/web-resource-model"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/webignition/web-page-model"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/webignition/web-json-model"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/webignition/web-resource-service"
+        }
+    ],
     "require": {
         "php": ">=5.5.0",
         "webignition/internet-media-type":">=0.1,<1.0",
-        "guzzlehttp/guzzle":">=5.2.0,<5.3",
+        "guzzlehttp/guzzle":"~5",
         "webignition/url":">=1.7.2,<2.0",
-        "webignition/web-resource-service":"1.3.1"
+        "webignition/web-resource-service":">=1.4,<2"
     },
     "require-dev": {
         "phpunit/phpunit": "~5.0",

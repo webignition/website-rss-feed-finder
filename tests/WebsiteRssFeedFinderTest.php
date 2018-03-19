@@ -60,41 +60,41 @@ class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
     public function getRssFeedUrlsDataProvider()
     {
         return [
-//            '404 retrieving root web page' => [
-//                'httpFixtures' => [
-//                    HttpFixtureFactory::createNotFoundResponse(),
-//                ],
-//                'expectedRssUrls' => [],
-//            ],
-//            'root web page not web page' => [
-//                'httpFixtures' => [
-//                    HttpFixtureFactory::createSuccessResponse('application/xml'),
-//                ],
-//                'expectedRssUrls' => [],
-//            ],
+            '404 retrieving root web page' => [
+                'httpFixtures' => [
+                    HttpFixtureFactory::createNotFoundResponse(),
+                ],
+                'expectedRssUrls' => [],
+            ],
+            'root web page not web page' => [
+                'httpFixtures' => [
+                    HttpFixtureFactory::createSuccessResponse('application/xml'),
+                ],
+                'expectedRssUrls' => [],
+            ],
             'no urls' => [
                 'httpFixtures' => [
                     HttpFixtureFactory::createSuccessResponse('text/html', HtmlDocumentFactory::load('empty')),
                 ],
                 'expectedRssUrls' => [],
             ],
-//            'single url' => [
-//                'httpFixtures' => [
-//                    HttpFixtureFactory::createSuccessResponse('text/html', HtmlDocumentFactory::load('single-rss')),
-//                ],
-//                'expectedRssUrls' => [
-//                    'http://example.com/rss-1.xml',
-//                ],
-//            ],
-//            'two urls' => [
-//                'httpFixtures' => [
-//                    HttpFixtureFactory::createSuccessResponse('text/html', HtmlDocumentFactory::load('two-rss')),
-//                ],
-//                'expectedRssUrls' => [
-//                    'http://example.com/rss-1.xml',
-//                    'http://example.com/rss-2.xml',
-//                ],
-//            ],
+            'single url' => [
+                'httpFixtures' => [
+                    HttpFixtureFactory::createSuccessResponse('text/html', HtmlDocumentFactory::load('single-rss')),
+                ],
+                'expectedRssUrls' => [
+                    'http://example.com/rss-1.xml',
+                ],
+            ],
+            'two urls' => [
+                'httpFixtures' => [
+                    HttpFixtureFactory::createSuccessResponse('text/html', HtmlDocumentFactory::load('two-rss')),
+                ],
+                'expectedRssUrls' => [
+                    'http://example.com/rss-1.xml',
+                    'http://example.com/rss-2.xml',
+                ],
+            ],
         ];
     }
 

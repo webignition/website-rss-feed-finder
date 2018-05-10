@@ -1,6 +1,8 @@
 <?php
+
 namespace webignition\WebsiteRssFeedFinder;
 
+use QueryPath\Exception as QueryPathException;
 use QueryPath\ParseException;
 use webignition\WebResource\Service\Configuration as WebResourceServiceConfiguration;
 use webignition\WebResource\WebPage\WebPage;
@@ -67,6 +69,7 @@ class WebsiteRssFeedFinder
 
     /**
      * @return string[]
+     * @throws QueryPathException
      */
     public function getRssFeedUrls()
     {
@@ -75,6 +78,8 @@ class WebsiteRssFeedFinder
 
     /**
      * @return string[]
+     *
+     * @throws QueryPathException
      */
     public function getAtomFeedUrls()
     {
@@ -85,6 +90,8 @@ class WebsiteRssFeedFinder
      * @param string $type
      *
      * @return string[]
+     *
+     * @throws QueryPathException
      */
     private function getLinkHref($type)
     {
@@ -101,6 +108,11 @@ class WebsiteRssFeedFinder
         return $this->feedUrls[$type];
     }
 
+    /**
+     * @return array|bool
+     *
+     * @throws QueryPathException
+     */
     private function findFeedUrls()
     {
         $rootWebPage = $this->getRootWebPage();
@@ -117,6 +129,8 @@ class WebsiteRssFeedFinder
                 ->find('link[rel=alternate]')
                 ->each(
                     function ($index, \DOMElement $domElement) use (&$feedUrls, $supportedFeedTypes) {
+                        unset($index);
+
                         foreach ($supportedFeedTypes as $supportedFeedType) {
                             if ($domElement->getAttribute('type') == $supportedFeedType) {
                                 if (!isset($feedUrls[$supportedFeedType])) {

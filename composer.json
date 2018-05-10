@@ -26,7 +26,7 @@
         ]
     },
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=5.6.0",
         "webignition/internet-media-type":">=0.1,<1.0",
         "guzzlehttp/guzzle":"~5",
         "webignition/url":">=1.7.2,<2.0",

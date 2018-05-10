@@ -3,13 +3,13 @@
 namespace webignition\WebsiteRssFeedFinder;
 
 use GuzzleHttp\Client as HttpClient;
-use QueryPath\Exception as QueryPathException;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Request;
 use QueryPath\ParseException;
 use webignition\NormalisedUrl\NormalisedUrl;
-use webignition\WebResource\Service\Configuration as WebResourceServiceConfiguration;
+use webignition\WebResource\Retriever as WebResourceRetriever;
 use webignition\WebResource\WebPage\WebPage;
-use webignition\WebResource\Service\Service as WebResourceService;
-use webignition\WebResource\WebResource;
+use webignition\WebResourceInterfaces\WebPageInterface;
 
 class WebsiteRssFeedFinder
 {
@@ -22,11 +22,6 @@ class WebsiteRssFeedFinder
      * @var NormalisedUrl
      */
     private $rootUrl = null;
-
-    /**
-     * @var WebPage
-     */
-    private $rootWebPage = null;
 
     /**
      * @var array
@@ -42,9 +37,9 @@ class WebsiteRssFeedFinder
     ];
 
     /**
-     * @var WebResourceService
+     * @var WebResourceRetriever
      */
-    private $webResourceService;
+    private $webResourceRetriever;
 
     /**
      * @param HttpClient $httpClient
@@ -53,17 +48,11 @@ class WebsiteRssFeedFinder
     {
         $this->httpClient = $httpClient;
 
-        $webResourceServiceConfiguration = new WebResourceServiceConfiguration([
-            WebResourceServiceConfiguration::CONFIG_ALLOW_UNKNOWN_RESOURCE_TYPES => false,
-            WebResourceServiceConfiguration::CONFIG_KEY_CONTENT_TYPE_WEB_RESOURCE_MAP => [
-                'text/html' => WebPage::class,
-            ],
-            WebResourceServiceConfiguration::CONFIG_KEY_HTTP_CLIENT => $httpClient,
-            WebResourceServiceConfiguration::CONFIG_ALLOW_UNKNOWN_RESOURCE_TYPES => true,
-        ]);
-
-        $this->webResourceService = new WebResourceService();
-        $this->webResourceService->setConfiguration($webResourceServiceConfiguration);
+        $this->webResourceRetriever = new WebResourceRetriever(
+            $this->httpClient,
+            WebPage::getModelledContentTypeStrings(),
+            false
+        );
     }
 
     /**
@@ -72,11 +61,13 @@ class WebsiteRssFeedFinder
     public function setRootUrl($url)
     {
         $this->rootUrl = new NormalisedUrl($url);
+        $this->feedUrls = [];
     }
 
     /**
      * @return string[]
-     * @throws QueryPathException
+     *
+     * @throws GuzzleException
      */
     public function getRssFeedUrls()
     {
@@ -86,7 +77,7 @@ class WebsiteRssFeedFinder
     /**
      * @return string[]
      *
-     * @throws QueryPathException
+     * @throws GuzzleException
      */
     public function getAtomFeedUrls()
     {
@@ -98,7 +89,7 @@ class WebsiteRssFeedFinder
      *
      * @return string[]
      *
-     * @throws QueryPathException
+     * @throws GuzzleException
      */
     private function getLinkHref($type)
     {
@@ -118,12 +109,12 @@ class WebsiteRssFeedFinder
     /**
      * @return array|bool
      *
-     * @throws QueryPathException
+     * @throws GuzzleException
      */
     private function findFeedUrls()
     {
-        $rootWebPage = $this->getRootWebPage();
-        if (!$rootWebPage instanceof WebPage) {
+        $rootWebPage = $this->retrieveRootWebPage();
+        if (empty($rootWebPage)) {
             return false;
         }
 
@@ -166,28 +157,20 @@ class WebsiteRssFeedFinder
     }
 
     /**
-     * @return WebPage
-     */
-    private function getRootWebPage()
-    {
-        if (is_null($this->rootWebPage)) {
-            $this->rootWebPage = $this->retrieveRootWebPage();
-        }
-
-        return $this->rootWebPage;
-    }
-
-    /**
-     * @return WebResource
+     * @return WebPageInterface
+     *
+     * @throws GuzzleException
      */
     private function retrieveRootWebPage()
     {
-        $request = $this->httpClient->createRequest('GET', $this->rootUrl);
+        $webPage = null;
 
         try {
-            return $this->webResourceService->get($request);
+            /* @var WebPage $webPage */
+            $webPage = $this->webResourceRetriever->retrieve(new Request('GET', $this->rootUrl));
         } catch (\Exception $exception) {
-            return null;
         }
+
+        return $webPage;
     }
 }

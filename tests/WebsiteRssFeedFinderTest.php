@@ -2,11 +2,13 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder;
 
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use QueryPath\Exception as QueryPathException;
 use webignition\Tests\WebsiteRssFeedFinder\Factory\HtmlDocumentFactory;
-use webignition\Tests\WebsiteRssFeedFinder\Factory\HttpFixtureFactory;
 use webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder;
-use GuzzleHttp\Subscriber\Mock as HttpMockSubscriber;
 use GuzzleHttp\Client as HttpClient;
 
 class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
@@ -22,13 +24,23 @@ class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
     private $websiteRssFeedFinder;
 
     /**
+     * @var MockHandler
+     */
+    private $mockHandler;
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
         parent::setUp();
 
-        $this->httpClient = new HttpClient();
+        $this->mockHandler = new MockHandler();
+        $handlerStack = HandlerStack::create($this->mockHandler);
+        $this->httpClient = new HttpClient([
+            'handler' => $handlerStack,
+        ]);
+
         $this->websiteRssFeedFinder = new WebsiteRssFeedFinder($this->httpClient);
         $this->websiteRssFeedFinder->setRootUrl('http://example.com/');
     }
@@ -39,7 +51,7 @@ class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
      * @param array $httpFixtures
      * @param string[] $expectedRssUrls
      *
-     * @throws QueryPathException
+     * @throws GuzzleException
      */
     public function testGetRssFeedUrls($httpFixtures, $expectedRssUrls)
     {
@@ -55,25 +67,27 @@ class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
         return [
             '404 retrieving root web page' => [
                 'httpFixtures' => [
-                    HttpFixtureFactory::createNotFoundResponse(),
+                    new Response(404),
                 ],
                 'expectedRssUrls' => [],
             ],
             'root web page not web page' => [
                 'httpFixtures' => [
-                    HttpFixtureFactory::createSuccessResponse('application/xml'),
+                    new Response(200, ['content-type' => 'application/xml']),
                 ],
                 'expectedRssUrls' => [],
             ],
             'no urls' => [
                 'httpFixtures' => [
-                    HttpFixtureFactory::createSuccessResponse('text/html', HtmlDocumentFactory::load('empty')),
+                    new Response(200, ['content-type' => 'text/html']),
+                    new Response(200, ['content-type' => 'text/html'], HtmlDocumentFactory::load('empty')),
                 ],
                 'expectedRssUrls' => [],
             ],
             'single url' => [
                 'httpFixtures' => [
-                    HttpFixtureFactory::createSuccessResponse('text/html', HtmlDocumentFactory::load('single-rss')),
+                    new Response(200, ['content-type' => 'text/html']),
+                    new Response(200, ['content-type' => 'text/html'], HtmlDocumentFactory::load('single-rss')),
                 ],
                 'expectedRssUrls' => [
                     'http://example.com/rss-1.xml',
@@ -81,7 +95,8 @@ class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
             ],
             'two urls' => [
                 'httpFixtures' => [
-                    HttpFixtureFactory::createSuccessResponse('text/html', HtmlDocumentFactory::load('two-rss')),
+                    new Response(200, ['content-type' => 'text/html']),
+                    new Response(200, ['content-type' => 'text/html'], HtmlDocumentFactory::load('two-rss')),
                 ],
                 'expectedRssUrls' => [
                     'http://example.com/rss-1.xml',
@@ -97,7 +112,7 @@ class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
      * @param array $httpFixtures
      * @param string[] $expectedRssUrls
      *
-     * @throws QueryPathException
+     * @throws GuzzleException
      */
     public function testGetAtomFeedUrls($httpFixtures, $expectedRssUrls)
     {
@@ -113,25 +128,27 @@ class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
         return [
             '404 retrieving root web page' => [
                 'httpFixtures' => [
-                    HttpFixtureFactory::createNotFoundResponse(),
+                    new Response(404),
                 ],
                 'expectedRssUrls' => [],
             ],
             'root web page not web page' => [
                 'httpFixtures' => [
-                    HttpFixtureFactory::createSuccessResponse('application/xml'),
+                    new Response(200, ['content-type' => 'application/xml']),
                 ],
                 'expectedRssUrls' => [],
             ],
             'no urls' => [
                 'httpFixtures' => [
-                    HttpFixtureFactory::createSuccessResponse('text/html', HtmlDocumentFactory::load('empty')),
+                    new Response(200, ['content-type' => 'text/html']),
+                    new Response(200, ['content-type' => 'text/html'], HtmlDocumentFactory::load('empty')),
                 ],
                 'expectedRssUrls' => [],
             ],
             'single url' => [
                 'httpFixtures' => [
-                    HttpFixtureFactory::createSuccessResponse('text/html', HtmlDocumentFactory::load('single-atom')),
+                    new Response(200, ['content-type' => 'text/html']),
+                    new Response(200, ['content-type' => 'text/html'], HtmlDocumentFactory::load('single-atom')),
                 ],
                 'expectedRssUrls' => [
                     'http://example.com/atom-1.xml',
@@ -139,7 +156,8 @@ class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
             ],
             'two urls' => [
                 'httpFixtures' => [
-                    HttpFixtureFactory::createSuccessResponse('text/html', HtmlDocumentFactory::load('two-atom')),
+                    new Response(200, ['content-type' => 'text/html']),
+                    new Response(200, ['content-type' => 'text/html'], HtmlDocumentFactory::load('two-atom')),
                 ],
                 'expectedRssUrls' => [
                     'http://example.com/atom-1.xml',
@@ -154,8 +172,8 @@ class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
      */
     private function setHttpFixtures($fixtures)
     {
-        $httpMockSubscriber = new HttpMockSubscriber($fixtures);
-
-        $this->httpClient->getEmitter()->attach($httpMockSubscriber);
+        foreach ($fixtures as $fixture) {
+            $this->mockHandler->append($fixture);
+        }
     }
 }

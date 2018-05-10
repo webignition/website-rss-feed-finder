@@ -2,9 +2,9 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder;
 
+use QueryPath\Exception as QueryPathException;
 use webignition\Tests\WebsiteRssFeedFinder\Factory\HtmlDocumentFactory;
 use webignition\Tests\WebsiteRssFeedFinder\Factory\HttpFixtureFactory;
-use webignition\WebsiteRssFeedFinder\Configuration;
 use webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder;
 use GuzzleHttp\Subscriber\Mock as HttpMockSubscriber;
 use GuzzleHttp\Client as HttpClient;
@@ -17,6 +17,11 @@ class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
     private $httpClient;
 
     /**
+     * @var WebsiteRssFeedFinder
+     */
+    private $websiteRssFeedFinder;
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp()
@@ -24,13 +29,8 @@ class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->httpClient = new HttpClient();
-    }
-
-    public function testGetConfiguration()
-    {
-        $websiteRssFeedFinder = new WebsiteRssFeedFinder(new Configuration());
-
-        $this->assertInstanceOf(Configuration::class, $websiteRssFeedFinder->getConfiguration());
+        $this->websiteRssFeedFinder = new WebsiteRssFeedFinder($this->httpClient);
+        $this->websiteRssFeedFinder->setRootUrl('http://example.com/');
     }
 
     /**
@@ -38,20 +38,13 @@ class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
      *
      * @param array $httpFixtures
      * @param string[] $expectedRssUrls
+     *
+     * @throws QueryPathException
      */
     public function testGetRssFeedUrls($httpFixtures, $expectedRssUrls)
     {
         $this->setHttpFixtures($httpFixtures);
-
-        $configuration = new Configuration();
-        $configuration->setHttpClient($this->httpClient);
-        $configuration->setRootUrl('http://example.com/');
-
-        $websiteRssFeedFinder = new WebsiteRssFeedFinder($configuration);
-
-        $rssUrls = $websiteRssFeedFinder->getRssFeedUrls();
-
-        $this->assertEquals($expectedRssUrls, $rssUrls);
+        $this->assertEquals($expectedRssUrls, $this->websiteRssFeedFinder->getRssFeedUrls());
     }
 
     /**
@@ -103,20 +96,13 @@ class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
      *
      * @param array $httpFixtures
      * @param string[] $expectedRssUrls
+     *
+     * @throws QueryPathException
      */
     public function testGetAtomFeedUrls($httpFixtures, $expectedRssUrls)
     {
         $this->setHttpFixtures($httpFixtures);
-
-        $configuration = new Configuration();
-        $configuration->setHttpClient($this->httpClient);
-        $configuration->setRootUrl('http://example.com/');
-
-        $websiteRssFeedFinder = new WebsiteRssFeedFinder($configuration);
-
-        $rssUrls = $websiteRssFeedFinder->getAtomFeedUrls();
-
-        $this->assertEquals($expectedRssUrls, $rssUrls);
+        $this->assertEquals($expectedRssUrls, $this->websiteRssFeedFinder->getAtomFeedUrls());
     }
 
     /**

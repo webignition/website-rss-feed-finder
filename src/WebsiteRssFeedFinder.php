@@ -2,8 +2,10 @@
 
 namespace webignition\WebsiteRssFeedFinder;
 
+use GuzzleHttp\Client as HttpClient;
 use QueryPath\Exception as QueryPathException;
 use QueryPath\ParseException;
+use webignition\NormalisedUrl\NormalisedUrl;
 use webignition\WebResource\Service\Configuration as WebResourceServiceConfiguration;
 use webignition\WebResource\WebPage\WebPage;
 use webignition\WebResource\Service\Service as WebResourceService;
@@ -11,6 +13,16 @@ use webignition\WebResource\WebResource;
 
 class WebsiteRssFeedFinder
 {
+    /**
+     * @var HttpClient
+     */
+    private $httpClient;
+
+    /**
+     * @var NormalisedUrl
+     */
+    private $rootUrl = null;
+
     /**
      * @var WebPage
      */
@@ -30,28 +42,23 @@ class WebsiteRssFeedFinder
     ];
 
     /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
      * @var WebResourceService
      */
     private $webResourceService;
 
     /**
-     * @param Configuration $configuration
+     * @param HttpClient $httpClient
      */
-    public function __construct(Configuration $configuration)
+    public function __construct(HttpClient $httpClient)
     {
-        $this->configuration = $configuration;
+        $this->httpClient = $httpClient;
 
         $webResourceServiceConfiguration = new WebResourceServiceConfiguration([
             WebResourceServiceConfiguration::CONFIG_ALLOW_UNKNOWN_RESOURCE_TYPES => false,
             WebResourceServiceConfiguration::CONFIG_KEY_CONTENT_TYPE_WEB_RESOURCE_MAP => [
                 'text/html' => WebPage::class,
             ],
-            WebResourceServiceConfiguration::CONFIG_KEY_HTTP_CLIENT => $this->configuration->getHttpClient(),
+            WebResourceServiceConfiguration::CONFIG_KEY_HTTP_CLIENT => $httpClient,
             WebResourceServiceConfiguration::CONFIG_ALLOW_UNKNOWN_RESOURCE_TYPES => true,
         ]);
 
@@ -60,11 +67,11 @@ class WebsiteRssFeedFinder
     }
 
     /**
-     * @return Configuration
+     * @param string $url
      */
-    public function getConfiguration()
+    public function setRootUrl($url)
     {
-        return $this->configuration;
+        $this->rootUrl = new NormalisedUrl($url);
     }
 
     /**
@@ -175,8 +182,7 @@ class WebsiteRssFeedFinder
      */
     private function retrieveRootWebPage()
     {
-        $httpClient = $this->configuration->getHttpClient();
-        $request = $httpClient->createRequest('GET', $this->configuration->getRootUrl());
+        $request = $this->httpClient->createRequest('GET', $this->rootUrl);
 
         try {
             return $this->webResourceService->get($request);

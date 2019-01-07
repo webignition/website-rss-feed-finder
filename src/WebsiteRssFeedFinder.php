@@ -5,11 +5,11 @@ namespace webignition\WebsiteRssFeedFinder;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
+use QueryPath\Exception as QueryPathException;
 use QueryPath\ParseException;
 use webignition\NormalisedUrl\NormalisedUrl;
 use webignition\WebResource\Retriever as WebResourceRetriever;
 use webignition\WebResource\WebPage\WebPage;
-use webignition\WebResourceInterfaces\WebPageInterface;
 
 class WebsiteRssFeedFinder
 {
@@ -41,9 +41,6 @@ class WebsiteRssFeedFinder
      */
     private $webResourceRetriever;
 
-    /**
-     * @param HttpClient $httpClient
-     */
     public function __construct(HttpClient $httpClient)
     {
         $this->httpClient = $httpClient;
@@ -55,43 +52,39 @@ class WebsiteRssFeedFinder
         );
     }
 
-    /**
-     * @param string $url
-     */
-    public function setRootUrl($url)
+    public function setRootUrl(string $url)
     {
         $this->rootUrl = new NormalisedUrl($url);
         $this->feedUrls = [];
     }
 
     /**
-     * @return string[]
+     * @return array
      *
-     * @throws GuzzleException
+     * @throws QueryPathException
      */
-    public function getRssFeedUrls()
+    public function getRssFeedUrls(): array
     {
         return $this->getLinkHref('application/rss+xml');
     }
 
     /**
-     * @return string[]
+     * @return array
      *
-     * @throws GuzzleException
+     * @throws QueryPathException
      */
-    public function getAtomFeedUrls()
+    public function getAtomFeedUrls(): array
     {
         return $this->getLinkHref('application/atom+xml');
     }
 
     /**
      * @param string $type
+     * @return array
      *
-     * @return string[]
-     *
-     * @throws GuzzleException
+     * @throws QueryPathException
      */
-    private function getLinkHref($type)
+    private function getLinkHref(string $type): array
     {
         if (!isset($this->feedUrls[$type])) {
             if (false === $this->findFeedUrls()) {
@@ -109,10 +102,11 @@ class WebsiteRssFeedFinder
     /**
      * @return array|bool
      *
-     * @throws GuzzleException
+     * @throws QueryPathException
      */
     private function findFeedUrls()
     {
+        /* @var WebPage $rootWebPage */
         $rootWebPage = $this->retrieveRootWebPage();
         if (empty($rootWebPage)) {
             return false;
@@ -156,12 +150,7 @@ class WebsiteRssFeedFinder
         return $this->feedUrls = $feedUrls;
     }
 
-    /**
-     * @return WebPageInterface
-     *
-     * @throws GuzzleException
-     */
-    private function retrieveRootWebPage()
+    private function retrieveRootWebPage(): ?WebPage
     {
         $webPage = null;
 
@@ -169,6 +158,7 @@ class WebsiteRssFeedFinder
             /* @var WebPage $webPage */
             $webPage = $this->webResourceRetriever->retrieve(new Request('GET', $this->rootUrl));
         } catch (\Exception $exception) {
+        } catch (GuzzleException $guzzleException) {
         }
 
         return $webPage;

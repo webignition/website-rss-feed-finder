@@ -2,7 +2,6 @@
 
 namespace webignition\Tests\WebsiteRssFeedFinder;
 
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
@@ -51,18 +50,15 @@ class WebsiteRssFeedFinderTest extends \PHPUnit\Framework\TestCase
      * @param array $httpFixtures
      * @param string[] $expectedRssUrls
      *
-     * @throws GuzzleException
+     * @throws QueryPathException
      */
-    public function testGetRssFeedUrls($httpFixtures, $expectedRssUrls)
+    public function testGetRssFeedUrls(array $httpFixtures, array $expectedRssUrls)
     {
         $this->setHttpFixtures($httpFixtures);
         $this->assertEquals($expectedRssUrls, $this->websiteRssFeedFinder->getRssFeedUrls());
     }
 
-    /**
-     * @return array
-     */
-    public function getRssFeedUrlsDataProvider()
+    public function getRssFeedUrlsDataProvider(): array
     {
         return [
             '404 retrieving root web page' => [
@@ -112,18 +108,15 @@ class WebsiteRssFeedFinderTest extends \PHPUnit\Framework\TestCase
      * @param array $httpFixtures
      * @param string[] $expectedRssUrls
      *
-     * @throws GuzzleException
+     * @throws QueryPathException
      */
-    public function testGetAtomFeedUrls($httpFixtures, $expectedRssUrls)
+    public function testGetAtomFeedUrls(array $httpFixtures, array $expectedRssUrls)
     {
         $this->setHttpFixtures($httpFixtures);
         $this->assertEquals($expectedRssUrls, $this->websiteRssFeedFinder->getAtomFeedUrls());
     }
 
-    /**
-     * @return array
-     */
-    public function getAtomFeedUrlsDataProvider()
+    public function getAtomFeedUrlsDataProvider(): array
     {
         return [
             '404 retrieving root web page' => [
@@ -167,10 +160,7 @@ class WebsiteRssFeedFinderTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /**
-     * @param array $fixtures
-     */
-    private function setHttpFixtures($fixtures)
+    private function setHttpFixtures(array $fixtures)
     {
         foreach ($fixtures as $fixture) {
             $this->mockHandler->append($fixture);

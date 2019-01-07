@@ -3,11 +3,9 @@
 namespace webignition\WebsiteRssFeedFinder;
 
 use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
-use QueryPath\Exception as QueryPathException;
-use QueryPath\ParseException;
 use webignition\NormalisedUrl\NormalisedUrl;
+use webignition\WebPageInspector\WebPageInspector;
 use webignition\WebResource\Retriever as WebResourceRetriever;
 use webignition\WebResource\WebPage\WebPage;
 
@@ -58,32 +56,16 @@ class WebsiteRssFeedFinder
         $this->feedUrls = [];
     }
 
-    /**
-     * @return array
-     *
-     * @throws QueryPathException
-     */
     public function getRssFeedUrls(): array
     {
         return $this->getLinkHref('application/rss+xml');
     }
 
-    /**
-     * @return array
-     *
-     * @throws QueryPathException
-     */
     public function getAtomFeedUrls(): array
     {
         return $this->getLinkHref('application/atom+xml');
     }
 
-    /**
-     * @param string $type
-     * @return array
-     *
-     * @throws QueryPathException
-     */
     private function getLinkHref(string $type): array
     {
         if (!isset($this->feedUrls[$type])) {
@@ -99,10 +81,9 @@ class WebsiteRssFeedFinder
         return $this->feedUrls[$type];
     }
 
+    /** @noinspection PhpDocMissingThrowsInspection */
     /**
      * @return array|bool
-     *
-     * @throws QueryPathException
      */
     private function findFeedUrls()
     {
@@ -112,41 +93,35 @@ class WebsiteRssFeedFinder
             return false;
         }
 
-        libxml_use_internal_errors(true);
-
         $feedUrls = [];
         $supportedFeedTypes = $this->supportedFeedTypes;
-        try {
-            $rootWebPage
-                ->find('link[rel=alternate]')
-                ->each(
-                    function ($index, \DOMElement $domElement) use (&$feedUrls, $supportedFeedTypes) {
-                        unset($index);
 
-                        foreach ($supportedFeedTypes as $supportedFeedType) {
-                            if ($domElement->getAttribute('type') == $supportedFeedType) {
-                                if (!isset($feedUrls[$supportedFeedType])) {
-                                    $feedUrls[$supportedFeedType] = [];
-                                }
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $inspector = new WebPageInspector($rootWebPage);
 
-                                $hasSupportedFeedType = in_array(
-                                    $domElement->getAttribute('href'),
-                                    $feedUrls[$supportedFeedType]
-                                );
+        /* @var \DOMElement[] $linkRelAlternativeElements */
+        $linkRelAlternativeElements = $inspector->querySelectorAll('link[rel=alternate]');
 
-                                if (!$hasSupportedFeedType) {
-                                    $feedUrls[$supportedFeedType][] =
-                                        $domElement->getAttribute('href');
-                                }
-                            }
-                        }
+        foreach ($linkRelAlternativeElements as $linkRelAlternativeElement) {
+            foreach ($supportedFeedTypes as $supportedFeedType) {
+                if ($linkRelAlternativeElement->getAttribute('type') == $supportedFeedType) {
+                    if (!isset($feedUrls[$supportedFeedType])) {
+                        $feedUrls[$supportedFeedType] = [];
                     }
-                );
-        } catch (ParseException $parseException) {
-            // Invalid XML
+
+                    $hasSupportedFeedType = in_array(
+                        $linkRelAlternativeElement->getAttribute('href'),
+                        $feedUrls[$supportedFeedType]
+                    );
+
+                    if (!$hasSupportedFeedType) {
+                        $feedUrls[$supportedFeedType][] =
+                            $linkRelAlternativeElement->getAttribute('href');
+                    }
+                }
+            }
         }
 
-        libxml_use_internal_errors(false);
         return $this->feedUrls = $feedUrls;
     }
 
@@ -158,7 +133,6 @@ class WebsiteRssFeedFinder
             /* @var WebPage $webPage */
             $webPage = $this->webResourceRetriever->retrieve(new Request('GET', $this->rootUrl));
         } catch (\Exception $exception) {
-        } catch (GuzzleException $guzzleException) {
         }
 
         return $webPage;

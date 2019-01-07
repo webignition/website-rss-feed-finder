@@ -1,11 +1,11 @@
 <?php
+/** @noinspection PhpDocSignatureInspection */
 
 namespace webignition\Tests\WebsiteRssFeedFinder;
 
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use QueryPath\Exception as QueryPathException;
 use webignition\Tests\WebsiteRssFeedFinder\Factory\HtmlDocumentFactory;
 use webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder;
 use GuzzleHttp\Client as HttpClient;
@@ -46,11 +46,6 @@ class WebsiteRssFeedFinderTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider getRssFeedUrlsDataProvider
-     *
-     * @param array $httpFixtures
-     * @param string[] $expectedRssUrls
-     *
-     * @throws QueryPathException
      */
     public function testGetRssFeedUrls(array $httpFixtures, array $expectedRssUrls)
     {
@@ -104,11 +99,6 @@ class WebsiteRssFeedFinderTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider getAtomFeedUrlsDataProvider
-     *
-     * @param array $httpFixtures
-     * @param string[] $expectedRssUrls
-     *
-     * @throws QueryPathException
      */
     public function testGetAtomFeedUrls(array $httpFixtures, array $expectedRssUrls)
     {

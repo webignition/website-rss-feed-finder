@@ -69,9 +69,7 @@ class WebsiteRssFeedFinder
     private function getLinkHref(string $type): array
     {
         if (!isset($this->feedUrls[$type])) {
-            if (false === $this->findFeedUrls()) {
-                return [];
-            }
+            $this->findFeedUrls();
         }
 
         if (!isset($this->feedUrls[$type])) {
@@ -82,15 +80,12 @@ class WebsiteRssFeedFinder
     }
 
     /** @noinspection PhpDocMissingThrowsInspection */
-    /**
-     * @return array|bool
-     */
     private function findFeedUrls()
     {
         /* @var WebPage $rootWebPage */
         $rootWebPage = $this->retrieveRootWebPage();
         if (empty($rootWebPage)) {
-            return false;
+            return;
         }
 
         $feedUrls = [];
@@ -122,7 +117,7 @@ class WebsiteRssFeedFinder
             }
         }
 
-        return $this->feedUrls = $feedUrls;
+        $this->feedUrls = $feedUrls;
     }
 
     private function retrieveRootWebPage(): ?WebPage

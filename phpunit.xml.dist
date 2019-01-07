@@ -10,7 +10,6 @@
     convertWarningsToExceptions = "true"
     processIsolation            = "false"
     stopOnFailure               = "false"
-    syntaxCheck                 = "false"
     bootstrap                   = "vendor/autoload.php" >
 
     <testsuites>
@@ -20,9 +19,6 @@
     </testsuites>
 
     <filter>
-        <blacklist>
-            <directory suffix=".php">./vendor</directory>
-        </blacklist>
         <whitelist processUncoveredFilesFromWhitelist="false" addUncoveredFilesFromWhitelist="false">
             <directory suffix=".php">./src</directory>
         </whitelist>

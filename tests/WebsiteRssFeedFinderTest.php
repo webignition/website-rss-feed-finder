@@ -11,7 +11,7 @@ use webignition\Tests\WebsiteRssFeedFinder\Factory\HtmlDocumentFactory;
 use webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder;
 use GuzzleHttp\Client as HttpClient;
 
-class WebsiteRssFeedFinderTest extends \PHPUnit_Framework_TestCase
+class WebsiteRssFeedFinderTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var HttpClient

@@ -27,10 +27,10 @@
     },
     "require": {
         "php": ">=7.2.0",
-        "webignition/internet-media-type":">=1,<2",
+        "webignition/internet-media-type":">=2,<3",
         "guzzlehttp/guzzle":"~6",
         "webignition/url":">=2,<3",
-        "webignition/web-resource-retriever":">=0.7,<1"
+        "webignition/web-resource-retriever":">=1,<2"
     },
     "require-dev": {
         "phpunit/phpunit": "^7",

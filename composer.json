@@ -14,7 +14,7 @@
     "autoload": {
         "psr-4": {
             "webignition\\WebsiteRssFeedFinder\\": "src/",
-            "webignition\\Tests\\WebsiteRssFeedFinder\\": "tests/"
+            "webignition\\WebsiteRssFeedFinder\\Tests\\": "tests/"
         }
     },
     "scripts": {

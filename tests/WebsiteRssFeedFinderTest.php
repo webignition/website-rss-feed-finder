@@ -85,6 +85,19 @@ class WebsiteRssFeedFinderTest extends \PHPUnit\Framework\TestCase
                     'http://example.com/rss-1.xml',
                 ],
             ],
+            'single url; relateive' => [
+                'httpFixtures' => [
+                    new Response(200, ['content-type' => 'text/html']),
+                    new Response(
+                        200,
+                        ['content-type' => 'text/html'],
+                        HtmlDocumentFactory::load('single-rss-relative')
+                    ),
+                ],
+                'expectedRssUrls' => [
+                    'http://example.com/rss-relative.xml',
+                ],
+            ],
             'two urls' => [
                 'httpFixtures' => [
                     new Response(200, ['content-type' => 'text/html']),

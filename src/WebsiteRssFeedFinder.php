@@ -5,13 +5,18 @@ namespace webignition\WebsiteRssFeedFinder;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\UriInterface;
+use webignition\AbsoluteUrlDeriver\AbsoluteUrlDeriver;
 use webignition\Uri\Normalizer;
+use webignition\Uri\Uri;
 use webignition\WebPageInspector\WebPageInspector;
 use webignition\WebResource\Retriever as WebResourceRetriever;
 use webignition\WebResource\WebPage\WebPage;
 
 class WebsiteRssFeedFinder
 {
+    const TYPE_RSS = 'application/rss+xml';
+    const TYPE_ATOM = 'application/atom+xml';
+
     /**
      * @var HttpClient
      */
@@ -25,14 +30,14 @@ class WebsiteRssFeedFinder
     /**
      * @var array
      */
-    private $feedUrls = [];
+    private $feedUris = [];
 
     /**
      * @var string[]
      */
     private $supportedFeedTypes = [
-        'application/rss+xml',
-        'application/atom+xml'
+        self::TYPE_RSS,
+        self::TYPE_ATOM,
     ];
 
     /**
@@ -49,85 +54,83 @@ class WebsiteRssFeedFinder
             WebPage::getModelledContentTypeStrings(),
             false
         );
+
+        foreach ($this->supportedFeedTypes as $feedType) {
+            $this->feedUris[$feedType] = [];
+        }
     }
 
     public function setRootUrl(UriInterface $uri)
     {
         $this->rootUri = Normalizer::normalize($uri);
-        $this->feedUrls = [];
+
+        foreach ($this->supportedFeedTypes as $feedType) {
+            $this->feedUris[$feedType] = [];
+        }
     }
 
     /**
-     * @return string[]
+     * @return UriInterface[]
      */
     public function getRssFeedUrls(): array
     {
-        return $this->getLinkHref('application/rss+xml');
+        return $this->getLinkHref(self::TYPE_RSS);
     }
 
     /**
-     * @return string[]
+     * @return UriInterface[]
      */
     public function getAtomFeedUrls(): array
     {
-        return $this->getLinkHref('application/atom+xml');
+        return $this->getLinkHref(self::TYPE_ATOM);
     }
 
     /**
      * @param string $type
      *
-     * @return string[]
+     * @return UriInterface[]
      */
     private function getLinkHref(string $type): array
     {
-        if (!isset($this->feedUrls[$type])) {
+        if (empty($this->feedUris[$type])) {
             $this->findFeedUrls();
         }
 
-        if (!isset($this->feedUrls[$type])) {
-            return [];
-        }
-
-        return $this->feedUrls[$type];
+        return array_values($this->feedUris[$type]);
     }
 
     /** @noinspection PhpDocMissingThrowsInspection */
     private function findFeedUrls()
     {
-        /* @var WebPage $rootWebPage */
-        $rootWebPage = $this->retrieveRootWebPage();
-        if (empty($rootWebPage)) {
+        /* @var WebPage $webPage */
+        $webPage = $this->retrieveWebPage();
+        if (empty($webPage)) {
             return;
         }
 
-        $feedUrls = [];
-
         /** @noinspection PhpUnhandledExceptionInspection */
-        $inspector = new WebPageInspector($rootWebPage);
+        $inspector = new WebPageInspector($webPage);
 
         /* @var \DOMElement[] $linkRelAlternativeElements */
         $linkRelAlternativeElements = $inspector->querySelectorAll('link[rel=alternate]');
 
         foreach ($linkRelAlternativeElements as $linkRelAlternativeElement) {
             foreach ($this->supportedFeedTypes as $supportedFeedType) {
-                if ($linkRelAlternativeElement->getAttribute('type') == $supportedFeedType) {
-                    if (!isset($feedUrls[$supportedFeedType])) {
-                        $feedUrls[$supportedFeedType] = [];
-                    }
+                $feedType = $linkRelAlternativeElement->getAttribute('type');
 
+                if ($feedType === $supportedFeedType) {
                     $hrefValue = $linkRelAlternativeElement->getAttribute('href');
 
-                    if (!in_array($hrefValue, $feedUrls[$supportedFeedType])) {
-                        $feedUrls[$supportedFeedType][] = $hrefValue;
-                    }
+                    $feedUri = AbsoluteUrlDeriver::derive($this->rootUri, new Uri($hrefValue));
+                    $feedUriString = (string) $feedUri;
+
+                    $this->feedUris[$supportedFeedType][$feedUriString] = $feedUri;
                 }
             }
         }
-
-        $this->feedUrls = $feedUrls;
     }
 
-    private function retrieveRootWebPage(): ?WebPage
+    private function retrieveWebPage(): ?WebPage
     {
         $webPage = null;
 

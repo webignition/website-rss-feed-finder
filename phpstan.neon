@@ -1,4 +1,4 @@
 parameters:
   ignoreErrors:
-    - message: '#retrieveRootWebPage\(\) should return .*WebPage\|null but returns .*WebResourceInterface\|null#'
+    - message: '#retrieveWebPage\(\) should return .*WebPage\|null but returns .*WebResourceInterface\|null#'
       path: %currentWorkingDirectory%/src/WebsiteRssFeedFinder

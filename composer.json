@@ -32,7 +32,8 @@
         "webignition/internet-media-type":">=2,<3",
         "guzzlehttp/guzzle":"~6",
         "webignition/web-resource-retriever":">=1,<2",
-        "webignition/uri": "^0.4.0"
+        "webignition/uri": "^0.4.0",
+        "webignition/absolute-url-deriver": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^7",

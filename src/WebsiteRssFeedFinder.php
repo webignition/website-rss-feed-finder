@@ -5,6 +5,7 @@ namespace webignition\WebsiteRssFeedFinder;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\UriInterface;
+use webignition\Uri\Normalizer;
 use webignition\WebPageInspector\WebPageInspector;
 use webignition\WebResource\Retriever as WebResourceRetriever;
 use webignition\WebResource\WebPage\WebPage;
@@ -52,7 +53,7 @@ class WebsiteRssFeedFinder
 
     public function setRootUrl(UriInterface $uri)
     {
-        $this->rootUri = \Normalizer::normalize($uri);
+        $this->rootUri = Normalizer::normalize($uri);
         $this->feedUrls = [];
     }
 

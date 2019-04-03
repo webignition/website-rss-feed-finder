@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30873b1637025332f5f917f292ef6cb4",
+    "content-hash": "1d29fb88f047e5ad92217af92743957a",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -236,56 +236,6 @@
                 "url"
             ],
             "time": "2018-12-04T20:46:45+00:00"
-        },
-        {
-            "name": "mso/idna-convert",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/algo26-matthias/idna-convert.git",
-                "reference": "a6dfb6f87611e3a89d2eec4924a0f51db755c573"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/algo26-matthias/idna-convert/zipball/a6dfb6f87611e3a89d2eec4924a0f51db755c573",
-                "reference": "a6dfb6f87611e3a89d2eec4924a0f51db755c573",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pcre": "*",
-                "php": ">=5.6.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Mso\\IdnaConvert\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1+"
-            ],
-            "authors": [
-                {
-                    "name": "Matthias Sommerfeld",
-                    "email": "mso@phlylabs.de",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A library for encoding and decoding internationalized domain names",
-            "homepage": "http://idnaconv.net/",
-            "keywords": [
-                "idn",
-                "idna",
-                "php"
-            ],
-            "abandoned": "algo26-matthias/idna-convert",
-            "time": "2016-06-19T18:08:43+00:00"
         },
         {
             "name": "psr/http-message",
@@ -532,7 +482,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -606,25 +556,25 @@
         },
         {
             "name": "webignition/absolute-url-deriver",
-            "version": "1.5.2",
+            "version": "3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/absolute-url-deriver.git",
-                "reference": "9c1f23ee5b609b32eefc836904254d0d481caa29"
+                "reference": "edfe9406e39bfe2676784929a7857e1562edb77b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/absolute-url-deriver/zipball/9c1f23ee5b609b32eefc836904254d0d481caa29",
-                "reference": "9c1f23ee5b609b32eefc836904254d0d481caa29",
+                "url": "https://api.github.com/repos/webignition/absolute-url-deriver/zipball/edfe9406e39bfe2676784929a7857e1562edb77b",
+                "reference": "edfe9406e39bfe2676784929a7857e1562edb77b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0",
-                "webignition/url": ">=1.9.8"
+                "php": ">=7.2",
+                "webignition/uri": ">=0.3,<1"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.0",
-                "squizlabs/php_codesniffer": "3.*"
+                "phpunit/phpunit": "^7",
+                "squizlabs/php_codesniffer": "^3"
             },
             "type": "library",
             "autoload": {
@@ -648,7 +598,7 @@
                 "absolute",
                 "url"
             ],
-            "time": "2018-03-12T16:05:22+00:00"
+            "time": "2019-01-09T18:03:54+00:00"
         },
         {
             "name": "webignition/character-set-list",
@@ -787,16 +737,16 @@
         },
         {
             "name": "webignition/internet-media-type",
-            "version": "2.0",
+            "version": "2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/internet-media-type.git",
-                "reference": "d9fa880260a9689477f132f9b2310233ecc9b30f"
+                "reference": "cd797dfc3a43099d3caf2feee7ff8c000bb121af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/internet-media-type/zipball/d9fa880260a9689477f132f9b2310233ecc9b30f",
-                "reference": "d9fa880260a9689477f132f9b2310233ecc9b30f",
+                "url": "https://api.github.com/repos/webignition/internet-media-type/zipball/cd797dfc3a43099d3caf2feee7ff8c000bb121af",
+                "reference": "cd797dfc3a43099d3caf2feee7ff8c000bb121af",
                 "shasum": ""
             },
             "require": {
@@ -834,7 +784,7 @@
                 "media type",
                 "media-type"
             ],
-            "time": "2018-10-09T10:03:45+00:00"
+            "time": "2019-02-06T18:14:07+00:00"
         },
         {
             "name": "webignition/internet-media-type-interface",
@@ -926,6 +876,55 @@
                 "quoted-string"
             ],
             "time": "2017-05-11T11:41:31+00:00"
+        },
+        {
+            "name": "webignition/stream-factory",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/stream-factory.git",
+                "reference": "d9908e9250f2c8370fd77e626b83fdaf2d271f8e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webignition/stream-factory/zipball/d9908e9250f2c8370fd77e626b83fdaf2d271f8e",
+                "reference": "d9908e9250f2c8370fd77e626b83fdaf2d271f8e",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/psr7": "^1",
+                "php": ">=7.2.0",
+                "psr/http-message": "^1",
+                "webignition/stream-factory-interface": ">=0.2,<1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1",
+                "phpunit/phpunit": "^7",
+                "squizlabs/php_codesniffer": "^3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "webignition\\StreamFactory\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "Implementation of webignition/stream-factory-interface",
+            "homepage": "https://github.com/webignition/stream-factory",
+            "keywords": [
+                "psr-7",
+                "stream"
+            ],
+            "time": "2018-10-11T15:30:57+00:00"
         },
         {
             "name": "webignition/stream-factory-interface",
@@ -1075,61 +1074,6 @@
             "time": "2019-04-01T09:39:51+00:00"
         },
         {
-            "name": "webignition/url",
-            "version": "3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webignition/url.git",
-                "reference": "298a05e8ef9875d170ade5f607b0ca49fb9d9d8a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webignition/url/zipball/298a05e8ef9875d170ade5f607b0ca49fb9d9d8a",
-                "reference": "298a05e8ef9875d170ade5f607b0ca49fb9d9d8a",
-                "shasum": ""
-            },
-            "require": {
-                "mso/idna-convert": "^1",
-                "php": ">=7.2",
-                "psr/http-message": "^1",
-                "xrstf/ip-utils": "v1.0.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1",
-                "php-mock/php-mock-mockery": "^1",
-                "phpunit/phpunit": "^7",
-                "squizlabs/php_codesniffer": "3.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "webignition\\Url\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jon Cram",
-                    "email": "jon@webignition.net"
-                }
-            ],
-            "description": "A PSR-7 UriInterface implementation. A normalizer for applying sixteen lossy and lossless normalizations.",
-            "homepage": "https://github.com/webignition/url",
-            "keywords": [
-                "normalise",
-                "normaliser",
-                "normalize",
-                "normalizer",
-                "psr-7",
-                "uri",
-                "url"
-            ],
-            "time": "2018-12-10T16:51:57+00:00"
-        },
-        {
             "name": "webignition/web-json-model",
             "version": "5.0",
             "source": {
@@ -1182,16 +1126,16 @@
         },
         {
             "name": "webignition/web-page-inspector",
-            "version": "0.6",
+            "version": "1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/web-page-inspector.git",
-                "reference": "778ac9a60d1a0fb52bdd059acdc7bf0bf662ef69"
+                "reference": "ec72520b9aaa6bb868b2c43a5e2e0ca81c6ef0e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/web-page-inspector/zipball/778ac9a60d1a0fb52bdd059acdc7bf0bf662ef69",
-                "reference": "778ac9a60d1a0fb52bdd059acdc7bf0bf662ef69",
+                "url": "https://api.github.com/repos/webignition/web-page-inspector/zipball/ec72520b9aaa6bb868b2c43a5e2e0ca81c6ef0e8",
+                "reference": "ec72520b9aaa6bb868b2c43a5e2e0ca81c6ef0e8",
                 "shasum": ""
             },
             "require": {
@@ -1204,6 +1148,7 @@
             },
             "require-dev": {
                 "mockery/mockery": "^1",
+                "phpstan/phpstan-mockery": "^0.10.2",
                 "phpunit/phpunit": "^7",
                 "squizlabs/php_codesniffer": "^3"
             },
@@ -1229,34 +1174,36 @@
                 "inspector",
                 "webpage"
             ],
-            "time": "2018-10-12T17:35:30+00:00"
+            "time": "2019-02-14T12:52:30+00:00"
         },
         {
             "name": "webignition/web-page-model",
-            "version": "5.4",
+            "version": "5.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/web-page-model.git",
-                "reference": "563d2b91afd3ac731f061208a1c5fd7f38615ad3"
+                "reference": "0b2bf728f0b292dad040429edd267238b8ef43a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/web-page-model/zipball/563d2b91afd3ac731f061208a1c5fd7f38615ad3",
-                "reference": "563d2b91afd3ac731f061208a1c5fd7f38615ad3",
+                "url": "https://api.github.com/repos/webignition/web-page-model/zipball/0b2bf728f0b292dad040429edd267238b8ef43a5",
+                "reference": "0b2bf728f0b292dad040429edd267238b8ef43a5",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.0",
-                "webignition/absolute-url-deriver": ">=1.5.2,<2",
+                "webignition/absolute-url-deriver": ">=3,<4",
                 "webignition/character-set-list": "^0.2",
                 "webignition/internet-media-type": "^2",
                 "webignition/internet-media-type-interface": "^0.4",
-                "webignition/web-page-inspector": ">=0.3,<1",
+                "webignition/stream-factory": "^0.1.0",
+                "webignition/web-page-inspector": ">=1,<2",
                 "webignition/web-resource-interfaces": ">=3.3,<4",
                 "webignition/web-resource-model": ">=5.2,<6"
             },
             "require-dev": {
-                "mockery/mockery": "^1",
+                "guzzlehttp/psr7": "^1.5",
+                "phpstan/phpstan": "^0.11.1",
                 "phpunit/phpunit": "^7",
                 "squizlabs/php_codesniffer": "^3",
                 "webignition/web-resource-testing-tools": "^0.2"
@@ -1283,7 +1230,7 @@
                 "model",
                 "webpage"
             ],
-            "time": "2019-01-04T15:58:20+00:00"
+            "time": "2019-01-21T22:33:15+00:00"
         },
         {
             "name": "webignition/web-resource-interfaces",
@@ -1645,6 +1592,56 @@
                 "versions"
             ],
             "time": "2018-06-13T13:22:40+00:00"
+        },
+        {
+            "name": "mso/idna-convert",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/algo26-matthias/idna-convert.git",
+                "reference": "a6dfb6f87611e3a89d2eec4924a0f51db755c573"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/algo26-matthias/idna-convert/zipball/a6dfb6f87611e3a89d2eec4924a0f51db755c573",
+                "reference": "a6dfb6f87611e3a89d2eec4924a0f51db755c573",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mso\\IdnaConvert\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1+"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Sommerfeld",
+                    "email": "mso@phlylabs.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A library for encoding and decoding internationalized domain names",
+            "homepage": "http://idnaconv.net/",
+            "keywords": [
+                "idn",
+                "idna",
+                "php"
+            ],
+            "abandoned": "algo26-matthias/idna-convert",
+            "time": "2016-06-19T18:08:43+00:00"
         },
         {
             "name": "myclabs/deep-copy",

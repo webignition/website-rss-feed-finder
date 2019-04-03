@@ -7,6 +7,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use webignition\WebsiteRssFeedFinder\Tests\Factory\HtmlDocumentFactory;
+use webignition\Uri\Uri;
 use webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder;
 use GuzzleHttp\Client as HttpClient;
 
@@ -41,7 +42,7 @@ class WebsiteRssFeedFinderTest extends \PHPUnit\Framework\TestCase
         ]);
 
         $this->websiteRssFeedFinder = new WebsiteRssFeedFinder($this->httpClient);
-        $this->websiteRssFeedFinder->setRootUrl('http://example.com/');
+        $this->websiteRssFeedFinder->setRootUrl(new Uri('http://example.com/'));
     }
 
     /**

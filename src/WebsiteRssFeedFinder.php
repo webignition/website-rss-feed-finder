@@ -4,7 +4,7 @@ namespace webignition\WebsiteRssFeedFinder;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Psr7\Request;
-use webignition\NormalisedUrl\NormalisedUrl;
+use Psr\Http\Message\UriInterface;
 use webignition\WebPageInspector\WebPageInspector;
 use webignition\WebResource\Retriever as WebResourceRetriever;
 use webignition\WebResource\WebPage\WebPage;
@@ -17,9 +17,9 @@ class WebsiteRssFeedFinder
     private $httpClient;
 
     /**
-     * @var NormalisedUrl
+     * @var UriInterface
      */
-    private $rootUrl = null;
+    private $rootUri = null;
 
     /**
      * @var array
@@ -50,22 +50,33 @@ class WebsiteRssFeedFinder
         );
     }
 
-    public function setRootUrl(string $url)
+    public function setRootUrl(UriInterface $uri)
     {
-        $this->rootUrl = new NormalisedUrl($url);
+        $this->rootUri = \Normalizer::normalize($uri);
         $this->feedUrls = [];
     }
 
+    /**
+     * @return string[]
+     */
     public function getRssFeedUrls(): array
     {
         return $this->getLinkHref('application/rss+xml');
     }
 
+    /**
+     * @return string[]
+     */
     public function getAtomFeedUrls(): array
     {
         return $this->getLinkHref('application/atom+xml');
     }
 
+    /**
+     * @param string $type
+     *
+     * @return string[]
+     */
     private function getLinkHref(string $type): array
     {
         if (!isset($this->feedUrls[$type])) {
@@ -89,7 +100,6 @@ class WebsiteRssFeedFinder
         }
 
         $feedUrls = [];
-        $supportedFeedTypes = $this->supportedFeedTypes;
 
         /** @noinspection PhpUnhandledExceptionInspection */
         $inspector = new WebPageInspector($rootWebPage);
@@ -98,20 +108,16 @@ class WebsiteRssFeedFinder
         $linkRelAlternativeElements = $inspector->querySelectorAll('link[rel=alternate]');
 
         foreach ($linkRelAlternativeElements as $linkRelAlternativeElement) {
-            foreach ($supportedFeedTypes as $supportedFeedType) {
+            foreach ($this->supportedFeedTypes as $supportedFeedType) {
                 if ($linkRelAlternativeElement->getAttribute('type') == $supportedFeedType) {
                     if (!isset($feedUrls[$supportedFeedType])) {
                         $feedUrls[$supportedFeedType] = [];
                     }
 
-                    $hasSupportedFeedType = in_array(
-                        $linkRelAlternativeElement->getAttribute('href'),
-                        $feedUrls[$supportedFeedType]
-                    );
+                    $hrefValue = $linkRelAlternativeElement->getAttribute('href');
 
-                    if (!$hasSupportedFeedType) {
-                        $feedUrls[$supportedFeedType][] =
-                            $linkRelAlternativeElement->getAttribute('href');
+                    if (!in_array($hrefValue, $feedUrls[$supportedFeedType])) {
+                        $feedUrls[$supportedFeedType][] = $hrefValue;
                     }
                 }
             }
@@ -126,7 +132,7 @@ class WebsiteRssFeedFinder
 
         try {
             /* @var WebPage $webPage */
-            $webPage = $this->webResourceRetriever->retrieve(new Request('GET', $this->rootUrl));
+            $webPage = $this->webResourceRetriever->retrieve(new Request('GET', $this->rootUri));
         } catch (\Exception $exception) {
         }
 

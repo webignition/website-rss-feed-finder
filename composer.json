@@ -18,10 +18,12 @@
         }
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit --colors=always",
         "cs": "./vendor/bin/phpcs src tests --colors --standard=PSR2",
+        "static-analysis": "./vendor/bin/phpstan analyse src tests --level=7",
+        "test": "./vendor/bin/phpunit --colors=always",
         "ci": [
             "@composer cs",
+            "@composer static-analysis",
             "@composer test"
         ]
     },

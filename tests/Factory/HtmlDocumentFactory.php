@@ -1,6 +1,6 @@
 <?php
 
-namespace webignition\Tests\WebsiteRssFeedFinder\Factory;
+namespace webignition\WebsiteRssFeedFinder\Tests\Factory;
 
 class HtmlDocumentFactory
 {

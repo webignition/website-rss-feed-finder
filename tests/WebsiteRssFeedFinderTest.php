@@ -1,12 +1,12 @@
 <?php
 /** @noinspection PhpDocSignatureInspection */
 
-namespace webignition\Tests\WebsiteRssFeedFinder;
+namespace webignition\WebsiteRssFeedFinder\Tests;
 
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use webignition\Tests\WebsiteRssFeedFinder\Factory\HtmlDocumentFactory;
+use webignition\WebsiteRssFeedFinder\Tests\Factory\HtmlDocumentFactory;
 use webignition\WebsiteRssFeedFinder\WebsiteRssFeedFinder;
 use GuzzleHttp\Client as HttpClient;
 
